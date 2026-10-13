@@ -208,6 +208,79 @@
       transition: width 0.05s linear;
     }
 
+    /* Mission Target Card (Top-Center) */
+    #hud-mission-card {
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 220px;
+    }
+
+    .mission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: var(--text-muted);
+    }
+
+    .mission-header .value {
+      color: var(--neon-cyan);
+      font-weight: 800;
+    }
+
+    .mission-bar-bg {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    #mission-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-emerald));
+      border-radius: 3px;
+      box-shadow: 0 0 8px var(--neon-cyan);
+      transition: width 0.3s ease;
+    }
+
+    /* Integrity Health Pips */
+    .hp-pip {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: var(--neon-emerald);
+      border-radius: 2px;
+      box-shadow: 0 0 6px var(--neon-emerald);
+      transition: background 0.2s, box-shadow 0.2s, opacity 0.2s;
+    }
+
+    .hp-pip.lost {
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: none;
+      opacity: 0.4;
+    }
+
+    /* Secondary Button Variant */
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      color: var(--text-main) !important;
+      box-shadow: none !important;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border-color: rgba(255, 255, 255, 0.4) !important;
+    }
+
     /* Bottom Utility Bar */
     #hud-footer {
       position: absolute;
@@ -746,20 +819,34 @@
   <div id="game-container">
     <canvas id="gameCanvas" width="960" height="540"></canvas>
 
-    <!-- FLOATING FROSTED GLASS HUD -->
-    <!-- Top-Left Score & Multiplier -->
+    <!-- Top-Left Score & Integrity -->
     <div id="hud-score-card" class="hud-element">
       <div class="hud-stat">
-        <span class="label">Packet Score</span>
+        <span class="label">Integrity</span>
+        <div id="hud-hp-container" style="display: flex; gap: 4px; margin-top: 5px;">
+          <div class="hp-pip" id="hp-0"></div>
+          <div class="hp-pip" id="hp-1"></div>
+          <div class="hp-pip" id="hp-2"></div>
+        </div>
+      </div>
+      <div class="hud-stat">
+        <span class="label">Score</span>
         <span id="hud-score" class="value accent">0</span>
       </div>
       <div class="hud-stat">
-        <span class="label">Record</span>
-        <span id="hud-highscore" class="value">0</span>
-      </div>
-      <div class="hud-stat">
-        <span class="label">Clock Speed</span>
+        <span class="label">Speed</span>
         <span id="hud-speed" class="value" style="font-size:16px;">1.0x</span>
+      </div>
+    </div>
+
+    <!-- Top-Center Mission Progress (Win Target: 20 Firewalls) -->
+    <div id="hud-mission-card" class="hud-element">
+      <div class="mission-header">
+        <span>MAINFRAME TARGET</span>
+        <span id="mission-count" class="value">0 / 20</span>
+      </div>
+      <div class="mission-bar-bg">
+        <div id="mission-bar-fill"></div>
       </div>
     </div>
 
@@ -767,13 +854,12 @@
     <div id="hud-combo-card" class="hud-element">
       <div class="combo-header">
         <span>DATA OVERLOAD</span>
-        <span id="combo-status" class="combo-status-text">0 / 4 NODES</span>
+        <span id="combo-status" class="combo-status-text">0 / 3 NODES</span>
       </div>
       <div class="combo-pips">
         <div class="combo-pip" id="pip-0"></div>
         <div class="combo-pip" id="pip-1"></div>
         <div class="combo-pip" id="pip-2"></div>
-        <div class="combo-pip" id="pip-3"></div>
       </div>
       <div id="shield-timer-bar"></div>
     </div>
@@ -802,9 +888,9 @@
           <div>
             <div class="telemetry-header">SYSTEM READY // SECURE</div>
             <div class="directive-box">
-              Infiltrate the enterprise network.<br>
-              Dodge <strong>Firewalls</strong>.<br>
-              Harvest volatile <strong>Data Nodes</strong> to overload the buffer.
+              🎯 <strong>Objective: Clear 20 Firewalls to WIN!</strong><br>
+              🛡️ <strong>Integrity: 3 Lives</strong> (absorbs impacts)<br>
+              ⚡ <strong>3x Nodes:</strong> 5s Smash Shield + Repair
             </div>
           </div>
 
@@ -814,16 +900,16 @@
               <span>Light Thrust</span>
             </div>
             <div class="guide-item">
-              <span>4x Nodes</span>
-              <span>4s Smash Shield</span>
+              <span>Mission Goal</span>
+              <span style="color: var(--neon-cyan); font-weight:700;">20 Walls (WIN)</span>
+            </div>
+            <div class="guide-item">
+              <span>Integrity Buffer</span>
+              <span style="color: var(--neon-emerald); font-weight:700;">3 Lives</span>
             </div>
             <div class="guide-item">
               <span>Escape</span>
               <span>Boss Key</span>
-            </div>
-            <div class="guide-item">
-              <span>M</span>
-              <span>Toggle Audio</span>
             </div>
           </div>
         </div>
@@ -834,7 +920,7 @@
             <div class="hero-tagline">Protocol 0x4F // Cyber Flyer</div>
             <h1>DATA // <span>PACKET</span></h1>
             <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 8px;">
-              Lateral transmission test underway. Controls are calibrated for feather-light, responsive flight.
+              Infiltrate the secure mainframe by clearing 20 firewalls. Magnetic nodes and a 3-life buffer are enabled for accessible, winnable flight.
             </p>
           </div>
 
@@ -844,8 +930,8 @@
               <span id="intro-highscore" class="metric-val cyan">0</span>
             </div>
             <div class="matrix-tile">
-              <span class="metric-name">Shield Duration</span>
-              <span class="metric-val purple">4.0 SEC</span>
+              <span class="metric-name">Mission Target</span>
+              <span class="metric-val" style="color: var(--neon-emerald);">20 FIREWALLS</span>
             </div>
           </div>
 
@@ -925,6 +1011,73 @@
             <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE / ↑ / CLICK</span>
             <span>RETRANSMIT PACKET</span>
           </button>
+    <!-- VICTORY MODAL (35/65 Split Grid) -->
+    <div id="victory-modal" class="modal-overlay">
+      <div class="split-grid-modal">
+        <!-- 35% Left Column -->
+        <div class="modal-left">
+          <div>
+            <div class="telemetry-header" style="color: var(--neon-emerald);">ACCESS GRANTED // ROOT</div>
+            <div class="directive-box">
+              Mainframe defenses bypassed.<br>
+              Encrypted payload successfully delivered.<br>
+              <strong>Status: Mission Accomplished!</strong>
+            </div>
+          </div>
+
+          <div class="controls-guide">
+            <div class="guide-item">
+              <span>Mission Status</span>
+              <span style="color: var(--neon-emerald); font-weight:700;">VICTORY 🏆</span>
+            </div>
+            <div class="guide-item">
+              <span>Firewalls Cleared</span>
+              <span>20 / 20</span>
+            </div>
+            <div class="guide-item">
+              <span>Security Clearance</span>
+              <span>UNRESTRICTED</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 65% Right Column -->
+        <div class="modal-right">
+          <div class="hero-title-group">
+            <div class="hero-tagline" style="color: var(--neon-emerald);">MISSION ACCOMPLISHED // LEVEL CLEARED</div>
+            <h1 style="font-size: 32px;">MAINFRAME // <span>BREACHED! 🏆</span></h1>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 6px;">
+              You conquered the 20-firewall gauntlet! You can claim victory now or push into high-speed Endless Mode.
+            </p>
+          </div>
+
+          <div class="stats-matrix" style="margin: 16px 0;">
+            <div class="matrix-tile">
+              <span class="metric-name">Victory Score</span>
+              <span id="victory-score" class="metric-val cyan">0</span>
+            </div>
+            <div class="matrix-tile">
+              <span class="metric-name">Integrity Left</span>
+              <span id="victory-hp" class="metric-val" style="color: var(--neon-emerald);">3 / 3</span>
+            </div>
+            <div class="matrix-tile">
+              <span class="metric-name">Nodes Harvested</span>
+              <span id="victory-nodes" class="metric-val" style="color: var(--neon-emerald);">0</span>
+            </div>
+            <div class="matrix-tile">
+              <span class="metric-name">Walls Smashed</span>
+              <span id="victory-smashed" class="metric-val purple">0</span>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button id="btn-continue-endless" class="btn-launch" style="flex: 1.3;">
+              <span>CONTINUE ENDLESS</span>
+            </button>
+            <button id="btn-victory-restart" class="btn-launch btn-secondary" style="flex: 1;">
+              <span>PLAY AGAIN</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1149,6 +1302,43 @@
             });
           } catch (e) {}
         }
+
+        playDamage() {
+          if (this.muted || !this.ctx) return;
+          try {
+            const now = this.ctx.currentTime;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(160, now);
+            osc.frequency.exponentialRampToValueAtTime(50, now + 0.2);
+            gain.gain.setValueAtTime(0.25, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.22);
+          } catch (e) {}
+        }
+
+        playVictory() {
+          if (this.muted || !this.ctx) return;
+          try {
+            const now = this.ctx.currentTime;
+            [523.25, 659.25, 783.99, 1046.5, 1318.51].forEach((freq, i) => {
+              const osc = this.ctx.createOscillator();
+              const gain = this.ctx.createGain();
+              osc.type = 'triangle';
+              osc.frequency.setValueAtTime(freq, now + i * 0.08);
+              gain.gain.setValueAtTime(0.18, now + i * 0.08);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + (i + 1) * 0.08 + 0.15);
+              osc.connect(gain);
+              gain.connect(this.ctx.destination);
+              osc.start(now + i * 0.08);
+              osc.stop(now + (i + 1) * 0.08 + 0.16);
+            });
+          } catch (e) {}
+        }
       }
 
       /* ------------------------------------------------------------------------
@@ -1339,11 +1529,19 @@
           this.firewallsSmashed = 0;
           this.nodesCollected = 0;
 
-          // Transmission Pace Presets (Tuned for feather-light, agile, non-fatiguing flight)
+          // Win Condition & Integrity (3 Lives instead of 1-hit death!)
+          this.maxHp = 3;
+          this.hp = 3;
+          this.invulnerableTimer = 0;
+          this.WIN_TARGET = 20; // Clear 20 firewalls to WIN!
+          this.hasWon = false;
+          this.isEndlessMode = false;
+
+          // Transmission Pace Presets (Generous gaps, light agile physics, forgiving spacing)
           this.PACE_CONFIG = {
-            relaxed: { speed: 1.80, spacing: 420, gap: 210, gravity: 0.22, jump: -4.3, maxFall: 4.8, speedStep: 0.08, label: '0.8x' },
-            standard: { speed: 2.20, spacing: 390, gap: 195, gravity: 0.26, jump: -4.7, maxFall: 5.4, speedStep: 0.10, label: '1.0x' },
-            overclock: { speed: 2.80, spacing: 340, gap: 175, gravity: 0.32, jump: -5.4, maxFall: 6.4, speedStep: 0.16, label: '1.3x' }
+            relaxed: { speed: 1.65, spacing: 440, gap: 230, gravity: 0.20, jump: -3.9, maxFall: 4.3, speedStep: 0.06, label: '0.8x' },
+            standard: { speed: 2.00, spacing: 410, gap: 215, gravity: 0.23, jump: -4.3, maxFall: 4.8, speedStep: 0.08, label: '1.0x' },
+            overclock: { speed: 2.60, spacing: 350, gap: 185, gravity: 0.30, jump: -5.0, maxFall: 5.8, speedStep: 0.14, label: '1.3x' }
           };
           this.currentPace = localStorage.getItem('packet_pace_mode') || 'standard';
           if (!this.PACE_CONFIG[this.currentPace]) this.currentPace = 'standard';
@@ -1363,18 +1561,18 @@
             y: 270,
             vy: 0,
             radius: 12,        // Visual radius
-            hitboxRadius: 6.5, // Fair, forgiving hitbox for satisfying near-misses
+            hitboxRadius: 5.5, // Ultra-forgiving hitbox so near-misses never penalize
             angle: 0,
             gravity: initialCfg.gravity,
             jumpImpulse: initialCfg.jump,
             maxFallSpeed: initialCfg.maxFall
           };
 
-          // Combo & Shield Mechanics (4 nodes for quicker reward, 4.0s shield duration)
+          // Combo & Shield Mechanics (Just 3 nodes for quick shield, 5.0s duration!)
           this.combo = 0;
-          this.MAX_COMBO = 4;
+          this.MAX_COMBO = 3;
           this.shieldActive = false;
-          this.shieldDuration = 240; // 4.0 seconds at 60fps
+          this.shieldDuration = 300; // 5.0 seconds at 60fps
           this.shieldTimer = 0;
 
           // Obstacles & Nodes
@@ -1394,12 +1592,18 @@
             hudScore: document.getElementById('hud-score'),
             hudHighScore: document.getElementById('hud-highscore'),
             hudSpeed: document.getElementById('hud-speed'),
+            hpPips: [
+              document.getElementById('hp-0'),
+              document.getElementById('hp-1'),
+              document.getElementById('hp-2')
+            ],
+            missionCount: document.getElementById('mission-count'),
+            missionBarFill: document.getElementById('mission-bar-fill'),
             comboStatus: document.getElementById('combo-status'),
             pips: [
               document.getElementById('pip-0'),
               document.getElementById('pip-1'),
-              document.getElementById('pip-2'),
-              document.getElementById('pip-3')
+              document.getElementById('pip-2')
             ],
             paceButtons: document.querySelectorAll('.pace-btn'),
             shieldTimerBar: document.getElementById('shield-timer-bar'),
@@ -1412,6 +1616,13 @@
             bossPct: document.getElementById('boss-pct'),
             startModal: document.getElementById('start-modal'),
             gameoverModal: document.getElementById('gameover-modal'),
+            victoryModal: document.getElementById('victory-modal'),
+            btnContinueEndless: document.getElementById('btn-continue-endless'),
+            btnVictoryRestart: document.getElementById('btn-victory-restart'),
+            victoryScore: document.getElementById('victory-score'),
+            victoryHp: document.getElementById('victory-hp'),
+            victoryNodes: document.getElementById('victory-nodes'),
+            victorySmashed: document.getElementById('victory-smashed'),
             pauseBanner: document.getElementById('pause-banner'),
             btnStart: document.getElementById('btn-start'),
             btnRestart: document.getElementById('btn-restart'),
@@ -1494,6 +1705,20 @@
             });
           });
 
+          // Victory Modal Buttons
+          if (this.dom.btnContinueEndless) {
+            this.dom.btnContinueEndless.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.continueEndless();
+            });
+          }
+          if (this.dom.btnVictoryRestart) {
+            this.dom.btnVictoryRestart.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.startNewGame();
+            });
+          }
+
           // Audio Button Click
           this.dom.btnAudioToggle.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -1510,6 +1735,14 @@
           this.dom.bossScreen.addEventListener('click', (e) => {
             e.stopPropagation();
           });
+        }
+
+        continueEndless() {
+          this.isEndlessMode = true;
+          this.dom.victoryModal.classList.remove('active');
+          this.state = 'PLAYING';
+          this.showToast('ENDLESS PROTOCOL ACTIVE // GO FOR RECORD');
+          this.thrustPlayer();
         }
 
         setPace(pace, playAudio = true) {
@@ -1544,7 +1777,11 @@
           } else if (this.state === 'GAMEOVER') {
             this.startNewGame();
           } else if (this.state === 'PAUSED') {
-            this.resumeGame();
+            if (this.hasWon && !this.isEndlessMode) {
+              this.continueEndless();
+            } else {
+              this.resumeGame();
+            }
           }
         }
 
@@ -1565,6 +1802,12 @@
           this.firewallsPassed = 0;
           this.firewallsSmashed = 0;
           this.nodesCollected = 0;
+
+          // State & Lives Reset
+          this.hp = this.maxHp;
+          this.invulnerableTimer = 0;
+          this.hasWon = false;
+          this.isEndlessMode = false;
 
           // Apply selected pace configuration
           this.baseSpeed = cfg.speed;
@@ -1600,6 +1843,7 @@
           this.updateHUD();
           this.dom.startModal.classList.remove('active');
           this.dom.gameoverModal.classList.remove('active');
+          this.dom.victoryModal.classList.remove('active');
           this.dom.pauseBanner.classList.remove('active');
         }
 
@@ -1752,6 +1996,11 @@
           // Emit continuous luminous particle trail
           this.particles.emitTrail(this.player.x - 12, this.player.y, this.shieldActive);
 
+          // Invulnerability Flicker Timer
+          if (this.invulnerableTimer > 0) {
+            this.invulnerableTimer--;
+          }
+
           // Boundary Collisions (Ceiling & Floor)
           if (this.player.y - this.player.hitboxRadius <= 0) {
             this.player.y = this.player.hitboxRadius;
@@ -1759,11 +2008,14 @@
           }
 
           if (this.player.y + this.player.hitboxRadius >= this.V_HEIGHT) {
-            this.triggerGameOver('Floor Collision');
-            return;
+            this.player.y = this.V_HEIGHT - this.player.hitboxRadius;
+            this.player.vy = -4.2; // Gentle bounce back up
+            if (this.invulnerableTimer <= 0) {
+              this.takeDamage('Floor Collision');
+            }
           }
 
-          // Shield Countdown Timer (3.0s duration)
+          // Shield Countdown Timer (5.0s duration)
           if (this.shieldActive) {
             this.shieldTimer--;
             const progress = (this.shieldTimer / this.shieldDuration) * 100;
@@ -1787,6 +2039,11 @@
               this.firewallsPassed++;
               this.checkSpeedProgression();
               this.updateHUD();
+
+              // Win Condition Check: Infiltrate Mainframe (20 Firewalls)
+              if (this.firewallsPassed >= this.WIN_TARGET && !this.hasWon && !this.isEndlessMode) {
+                this.triggerVictory();
+              }
             }
 
             // Firewall Collision Check
@@ -1794,10 +2051,9 @@
               if (this.shieldActive) {
                 // SMASH THROUGH FIREWALL!
                 this.smashFirewall(obs);
-              } else {
-                // FATAL COLLISION
-                this.triggerGameOver('Firewall Collision');
-                return;
+              } else if (this.invulnerableTimer <= 0) {
+                // Non-fatal hit: deducts 1 integrity life with invulnerability grace period
+                this.takeDamage('Firewall Collision');
               }
             }
 
@@ -1816,19 +2072,25 @@
             this.spawnObstacle(rightmostX + this.obstacleSpacing);
           }
 
-          // Update Data Nodes
+          // Update Data Nodes with Magnetic Attraction
           for (let i = this.dataNodes.length - 1; i >= 0; i--) {
             const node = this.dataNodes[i];
             node.x -= this.currentSpeed;
             node.bobOffset += 0.08;
             node.y = node.baseY + Math.sin(node.bobOffset) * 6;
 
-            // Player Node Pickup Detection
             const dx = this.player.x - node.x;
             const dy = this.player.y - node.y;
             const dist = Math.hypot(dx, dy);
 
-            if (!node.collected && dist < this.player.hitboxRadius + node.radius + 6) {
+            // Gentle Magnetic Suction (nodes drift toward player within 90px)
+            if (dist < 90) {
+              node.x += dx * 0.14;
+              node.y += dy * 0.14;
+            }
+
+            // Player Node Pickup Detection
+            if (!node.collected && dist < this.player.hitboxRadius + node.radius + 10) {
               node.collected = true;
               this.collectDataNode(node);
               this.dataNodes.splice(i, 1);
@@ -1879,6 +2141,11 @@
             this.combo++;
             if (this.combo >= this.MAX_COMBO) {
               this.activateShield();
+              // Integrity repair bonus!
+              if (this.hp < this.maxHp) {
+                this.hp++;
+                this.floatingTexts.add('+1 INTEGRITY REPAIRED!', this.player.x, this.player.y - 45, '#00ffaa');
+              }
             }
           }
           this.updateHUD();
@@ -1888,7 +2155,7 @@
           this.shieldActive = true;
           this.shieldTimer = this.shieldDuration;
           this.sound.playShieldCharge();
-          this.floatingTexts.add('4s BREAKER SHIELD!', this.player.x, this.player.y - 30, '#b545ff');
+          this.floatingTexts.add('5s BREAKER SHIELD!', this.player.x, this.player.y - 30, '#b545ff');
           this.showToast('BREAKER SHIELD ACTIVE // SMASH READY');
           this.updateHUD();
         }
@@ -1921,6 +2188,38 @@
 
           // Consume shield immediately on smash
           this.deactivateShield(true);
+        }
+
+        takeDamage(reason = 'Impact') {
+          this.hp--;
+          this.screenShake = 18;
+          this.invulnerableTimer = 85; // ~1.4s grace period
+          this.sound.playDamage();
+          this.floatingTexts.add('-1 INTEGRITY!', this.player.x, this.player.y - 25, '#ff2a5f');
+          this.updateHUD();
+
+          if (this.hp <= 0) {
+            this.triggerGameOver(reason);
+          }
+        }
+
+        triggerVictory() {
+          this.hasWon = true;
+          this.sound.playVictory();
+          this.particles.emitCollect(this.player.x, this.player.y);
+          this.showToast('MAINFRAME INFILTRATED // ACCESS GRANTED!');
+
+          this.dom.victoryScore.textContent = this.score;
+          this.dom.victoryHp.textContent = `${this.hp} / ${this.maxHp}`;
+          this.dom.victoryNodes.textContent = this.nodesCollected;
+          this.dom.victorySmashed.textContent = this.firewallsSmashed;
+
+          setTimeout(() => {
+            if (this.hasWon && !this.isEndlessMode && this.state === 'PLAYING') {
+              this.state = 'PAUSED';
+              this.dom.victoryModal.classList.add('active');
+            }
+          }, 450);
         }
 
         checkSpeedProgression() {
@@ -1977,14 +2276,32 @@
           this.dom.hudHighScore.textContent = this.highScore;
           this.dom.hudSpeed.textContent = this.speedMultiplier.endsWith('x') ? this.speedMultiplier : `${this.speedMultiplier}x`;
 
+          // Update Integrity (HP) Pips
+          for (let i = 0; i < this.maxHp; i++) {
+            if (this.dom.hpPips && this.dom.hpPips[i]) {
+              this.dom.hpPips[i].classList.toggle('lost', i >= this.hp);
+            }
+          }
+
+          // Update Mission Progress Bar
+          const winPct = Math.min(100, Math.floor((this.firewallsPassed / this.WIN_TARGET) * 100));
+          if (this.dom.missionBarFill) {
+            this.dom.missionBarFill.style.width = `${winPct}%`;
+          }
+          if (this.dom.missionCount) {
+            this.dom.missionCount.textContent = this.hasWon ? 'CLEARED 🏆' : `${this.firewallsPassed} / ${this.WIN_TARGET}`;
+          }
+
           // Update Combo Pips
           for (let i = 0; i < this.MAX_COMBO; i++) {
             const pip = this.dom.pips[i];
-            pip.className = 'combo-pip';
-            if (this.shieldActive) {
-              pip.classList.add('shield-filled');
-            } else if (i < this.combo) {
-              pip.classList.add('filled');
+            if (pip) {
+              pip.className = 'combo-pip';
+              if (this.shieldActive) {
+                pip.classList.add('shield-filled');
+              } else if (i < this.combo) {
+                pip.classList.add('filled');
+              }
             }
           }
 
@@ -2206,6 +2523,11 @@
           this.ctx.save();
           this.ctx.translate(p.x, p.y);
           this.ctx.rotate((p.angle * Math.PI) / 180);
+
+          // Invulnerability Grace Period Flicker
+          if (this.invulnerableTimer > 0 && Math.floor(this.invulnerableTimer / 4) % 2 === 0) {
+            this.ctx.globalAlpha = 0.32;
+          }
 
           // Draw Breaker Shield Bubble if active
           if (this.shieldActive) {

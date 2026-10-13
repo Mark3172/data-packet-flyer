@@ -9,14 +9,21 @@
 
 ---
 
+- **Live Demo**: [Play on GitHub Pages](https://mark3172.github.io/data-packet-flyer/)
+
+---
+
 ## 🎮 Gameplay Overview
 
-Take control of a high-frequency **Data Packet** navigating lateral firewalls in cyberspace.
+Take control of a high-frequency **Data Packet** infiltrating the root mainframe in cyberspace.
 
-- **Feather-Light Thrust**: Press <kbd>Space</kbd>, <kbd>↑</kbd>, <kbd>W</kbd>, or **Click / Tap** to give the packet an effortless, nimble upward lift against gentle gravity.
+- **Winnable 20-Firewall Mission**: Reach and breach the Mainframe by successfully clearing 20 firewalls to trigger a **VICTORY SCREEN**! Players can celebrate victory or continue into Endless Mode for high scores.
+- **3-Life Data Integrity System**: No unfair instant deaths! The packet has 3 Integrity points. Hitting an obstacle deducts 1 integrity and grants a generous ~1.4-second invulnerability grace flicker.
+- **Magnetic Data Nodes**: Glowing green Data Nodes are magnetically drawn toward your packet when within proximity (90px), ensuring rewarding pickups.
+- **Repair & Breaker Shield**: Collecting 3 Data Nodes restores +1 Integrity and activates a **5.0-second Breaker Shield** to smash directly through firewalls!
+- **Feather-Light Thrust**: Press <kbd>Space</kbd>, <kbd>↑</kbd>, <kbd>W</kbd>, <kbd>J</kbd>, or **Click / Tap** to give the packet an effortless, nimble upward lift against gentle gravity.
 - **Selectable Pacing / Difficulty**: Choose between **Relaxed (0.8x)**, **Standard (1.0x)**, and **Overclock (1.3x)** to match your preferred flow.
-- **Data Nodes & Breaker Shield**: Harvest glowing green **Data Nodes** floating in safe trajectories. Collecting 4 nodes triggers a **4.0-second Breaker Shield** to smash directly through a firewall!
-- **Dynamic Overclocking**: Every 10 cleared firewalls, the transmission clock speed accelerates gently, ramping up tension and score multipliers.
+- **Dynamic Overclocking**: After the 20-firewall mission or every 10 cleared walls in endless mode, transmission speed ramps up gently to build tension.
 
 ---
 
@@ -32,10 +39,13 @@ Take control of a high-frequency **Data Packet** navigating lateral firewalls in
 
 ## ✨ Features
 
-- **Tuned, Balanced Physics**: Accessible learning curve with wider firewall gates (190px+), spacious obstacle spacing (380px+), and fair near-miss hitboxes (6.5px).
+- **Winnable Mainframe Mission**: Defeat 20 firewalls to trigger the Root Mainframe Breached victory modal, complete with triumphant procedural synth chords.
+- **3-Life Data Integrity System**: High tolerance gameplay with 3 HP and visual glitch/flicker grace periods, preventing frustrating one-hit game overs.
+- **Magnetic Node Collection & Repair**: Gentle magnetic attraction draws nearby nodes into your path, granting points, repairs, and breaker shields.
+- **Tuned, Balanced Physics**: Accessible learning curve with wider firewall gates (215px+), spacious obstacle spacing (410px+), and forgiving near-miss hitboxes (5.5px).
 - **Interactive Pace Selector**: Seamlessly switch between Relaxed (0.8x), Standard (1.0x), and Overclock (1.3x) right on the start menu.
-- **35/65 Split Grid Menus**: Modern split-card start and game-over modals displaying live telemetry, controls, and run statistics.
-- **Translucent Frosted Glass HUD**: Sleek floating cards powered by `backdrop-filter: blur(16px)` housing scores, clock speed, and segmented combo meters.
+- **35/65 Split Grid Menus**: Modern split-card start, victory, and game-over modals displaying live telemetry, controls, and run statistics.
+- **Translucent Frosted Glass HUD**: Sleek floating cards powered by `backdrop-filter: blur(16px)` housing scores, Integrity health pips, mission progress bar, clock speed, and segmented combo meters.
 - **Visual FX & Screen Shake**: Luminescent particle trails, shattering firewall voxels, and a 22px screen shake when smashing through obstacles.
 - **Office Stealth Mode**:
   - **Mute by default**: Procedural synth audio powered by Web Audio API without external audio files.
