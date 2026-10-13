@@ -834,6 +834,10 @@
         <span id="hud-score" class="value accent">0</span>
       </div>
       <div class="hud-stat">
+        <span class="label">Best</span>
+        <span id="hud-highscore" class="value" style="font-size:16px;">0</span>
+      </div>
+      <div class="hud-stat">
         <span class="label">Speed</span>
         <span id="hud-speed" class="value" style="font-size:16px;">1.0x</span>
       </div>
@@ -1011,6 +1015,10 @@
             <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE / ↑ / CLICK</span>
             <span>RETRANSMIT PACKET</span>
           </button>
+        </div>
+      </div>
+    </div>
+
     <!-- VICTORY MODAL (35/65 Split Grid) -->
     <div id="victory-modal" class="modal-overlay">
       <div class="split-grid-modal">
@@ -1634,8 +1642,8 @@
           };
 
           // Initialize DOM values
-          this.dom.hudHighScore.textContent = this.highScore;
-          this.dom.introHighScore.textContent = this.highScore;
+          if (this.dom.hudHighScore) this.dom.hudHighScore.textContent = this.highScore;
+          if (this.dom.introHighScore) this.dom.introHighScore.textContent = this.highScore;
           this.setPace(this.currentPace, false);
 
           // Bind Events
@@ -2272,9 +2280,9 @@
         }
 
         updateHUD() {
-          this.dom.hudScore.textContent = this.score;
-          this.dom.hudHighScore.textContent = this.highScore;
-          this.dom.hudSpeed.textContent = this.speedMultiplier.endsWith('x') ? this.speedMultiplier : `${this.speedMultiplier}x`;
+          if (this.dom.hudScore) this.dom.hudScore.textContent = this.score;
+          if (this.dom.hudHighScore) this.dom.hudHighScore.textContent = this.highScore;
+          if (this.dom.hudSpeed) this.dom.hudSpeed.textContent = this.speedMultiplier.endsWith('x') ? this.speedMultiplier : `${this.speedMultiplier}x`;
 
           // Update Integrity (HP) Pips
           for (let i = 0; i < this.maxHp; i++) {
