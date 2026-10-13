@@ -810,8 +810,8 @@
 
           <div class="controls-guide">
             <div class="guide-item">
-              <span>Space / Click</span>
-              <span>Vertical Thrust</span>
+              <span>Space / ↑ / W / Click</span>
+              <span>Light Thrust</span>
             </div>
             <div class="guide-item">
               <span>4x Nodes</span>
@@ -834,7 +834,7 @@
             <div class="hero-tagline">Protocol 0x4F // Cyber Flyer</div>
             <h1>DATA // <span>PACKET</span></h1>
             <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 8px;">
-              Lateral transmission test underway. Select your preferred pace below to calibrate system frequency.
+              Lateral transmission test underway. Controls are calibrated for feather-light, responsive flight.
             </p>
           </div>
 
@@ -860,7 +860,7 @@
           </div>
 
           <button id="btn-start" class="btn-launch">
-            <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE</span>
+            <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE / ↑ / CLICK</span>
             <span>INITIALIZE TRANSMISSION</span>
           </button>
         </div>
@@ -881,7 +881,7 @@
 
           <div class="controls-guide">
             <div class="guide-item">
-              <span>Space / Click</span>
+              <span>Space / ↑ / W / Click</span>
               <span>Restart Run</span>
             </div>
             <div class="guide-item">
@@ -922,7 +922,7 @@
           </div>
 
           <button id="btn-restart" class="btn-launch">
-            <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE</span>
+            <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE / ↑ / CLICK</span>
             <span>RETRANSMIT PACKET</span>
           </button>
         </div>
@@ -1339,11 +1339,11 @@
           this.firewallsSmashed = 0;
           this.nodesCollected = 0;
 
-          // Transmission Pace Presets (Tuned for smooth, accessible, non-punishing flow)
+          // Transmission Pace Presets (Tuned for feather-light, agile, non-fatiguing flight)
           this.PACE_CONFIG = {
-            relaxed: { speed: 1.85, spacing: 410, gap: 205, gravity: 0.34, jump: -5.7, maxFall: 6.6, speedStep: 0.08, label: '0.8x' },
-            standard: { speed: 2.30, spacing: 380, gap: 190, gravity: 0.38, jump: -6.2, maxFall: 7.2, speedStep: 0.12, label: '1.0x' },
-            overclock: { speed: 2.90, spacing: 330, gap: 170, gravity: 0.45, jump: -7.0, maxFall: 8.5, speedStep: 0.20, label: '1.3x' }
+            relaxed: { speed: 1.80, spacing: 420, gap: 210, gravity: 0.22, jump: -4.3, maxFall: 4.8, speedStep: 0.08, label: '0.8x' },
+            standard: { speed: 2.20, spacing: 390, gap: 195, gravity: 0.26, jump: -4.7, maxFall: 5.4, speedStep: 0.10, label: '1.0x' },
+            overclock: { speed: 2.80, spacing: 340, gap: 175, gravity: 0.32, jump: -5.4, maxFall: 6.4, speedStep: 0.16, label: '1.3x' }
           };
           this.currentPace = localStorage.getItem('packet_pace_mode') || 'standard';
           if (!this.PACE_CONFIG[this.currentPace]) this.currentPace = 'standard';
@@ -1449,9 +1449,9 @@
         }
 
         bindEvents() {
-          // Jump Action: Spacebar or Mouse Click or Touch
+          // Jump Action: Spacebar, Up Arrow, W, J, or Mouse Click / Touch
           window.addEventListener('keydown', (e) => {
-            if (e.code === 'Space') {
+            if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'KeyJ') {
               e.preventDefault();
               this.handlePrimaryAction();
             } else if (e.code === 'Escape') {
@@ -1743,11 +1743,11 @@
           }
           this.player.y += this.player.vy;
 
-          // Packet Angle: Instantly snaps upwards on thrust, leans downwards into falls
+          // Packet Angle: Light upward lift on thrust, smooth gentle tilt on fall
           const targetAngle = this.player.vy > 0
-            ? Math.min((this.player.vy / this.player.maxFallSpeed) * 55, 60)
-            : Math.max((this.player.vy / Math.abs(this.player.jumpImpulse)) * 30, -32);
-          this.player.angle += (targetAngle - this.player.angle) * 0.25;
+            ? Math.min((this.player.vy / this.player.maxFallSpeed) * 45, 48)
+            : Math.max((this.player.vy / Math.abs(this.player.jumpImpulse)) * 26, -28);
+          this.player.angle += (targetAngle - this.player.angle) * 0.22;
 
           // Emit continuous luminous particle trail
           this.particles.emitTrail(this.player.x - 12, this.player.y, this.shieldActive);

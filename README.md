@@ -13,8 +13,7 @@
 
 Take control of a high-frequency **Data Packet** navigating lateral firewalls in cyberspace.
 
-- **Crisp Upward Thrust**: Press <kbd>Space</kbd> or **Click / Tap** to give the packet an immediate upward impulse against constant gravitational pull.
-- **Crisp Upward Thrust**: Press <kbd>Space</kbd> or **Click / Tap** to give the packet an immediate upward impulse against constant gravitational pull.
+- **Feather-Light Thrust**: Press <kbd>Space</kbd>, <kbd>↑</kbd>, <kbd>W</kbd>, or **Click / Tap** to give the packet an effortless, nimble upward lift against gentle gravity.
 - **Selectable Pacing / Difficulty**: Choose between **Relaxed (0.8x)**, **Standard (1.0x)**, and **Overclock (1.3x)** to match your preferred flow.
 - **Data Nodes & Breaker Shield**: Harvest glowing green **Data Nodes** floating in safe trajectories. Collecting 4 nodes triggers a **4.0-second Breaker Shield** to smash directly through a firewall!
 - **Dynamic Overclocking**: Every 10 cleared firewalls, the transmission clock speed accelerates gently, ramping up tension and score multipliers.
@@ -25,7 +24,7 @@ Take control of a high-frequency **Data Packet** navigating lateral firewalls in
 
 | Control | Action | Details |
 | :--- | :--- | :--- |
-| <kbd>Space</kbd> / **Left Click** | **Vertical Thrust** | Instant upward impulse with responsive directional tilting. |
+| <kbd>Space</kbd> / <kbd>↑</kbd> / <kbd>W</kbd> / **Left Click** | **Vertical Thrust** | Feather-light upward impulse with responsive, smooth tilting. |
 | <kbd>ESC</kbd> | **Boss Stealth Key** | Instantly hides the canvas and displays an authentic benign **Windows System Update** screen. Press <kbd>ESC</kbd> again to resume safely. |
 | <kbd>M</kbd> | **Audio Toggle** | Toggle procedural Web Audio sound FX (muted by default for office safety). |
 
