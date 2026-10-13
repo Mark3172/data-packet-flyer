@@ -14,8 +14,10 @@
 Take control of a high-frequency **Data Packet** navigating lateral firewalls in cyberspace.
 
 - **Crisp Upward Thrust**: Press <kbd>Space</kbd> or **Click / Tap** to give the packet an immediate upward impulse against constant gravitational pull.
-- **Data Nodes & Breaker Shield Twist**: Harvest glowing green **Data Nodes** floating between firewalls. Filling the **Overload Buffer** (5 nodes) triggers a **3-second Breaker Shield** that lets you smash directly through a firewall!
-- **Dynamic Overclocking**: Every 10 cleared firewalls, the transmission clock speed increases, ramping up tension and score multipliers.
+- **Crisp Upward Thrust**: Press <kbd>Space</kbd> or **Click / Tap** to give the packet an immediate upward impulse against constant gravitational pull.
+- **Selectable Pacing / Difficulty**: Choose between **Relaxed (0.8x)**, **Standard (1.0x)**, and **Overclock (1.3x)** to match your preferred flow.
+- **Data Nodes & Breaker Shield**: Harvest glowing green **Data Nodes** floating in safe trajectories. Collecting 4 nodes triggers a **4.0-second Breaker Shield** to smash directly through a firewall!
+- **Dynamic Overclocking**: Every 10 cleared firewalls, the transmission clock speed accelerates gently, ramping up tension and score multipliers.
 
 ---
 
@@ -31,7 +33,8 @@ Take control of a high-frequency **Data Packet** navigating lateral firewalls in
 
 ## ✨ Features
 
-- **Tight, Non-Floaty Physics**: Carefully tuned gravity, instantaneous jump velocity reset, terminal velocity clamp, and fair circular hitboxes.
+- **Tuned, Balanced Physics**: Accessible learning curve with wider firewall gates (190px+), spacious obstacle spacing (380px+), and fair near-miss hitboxes (6.5px).
+- **Interactive Pace Selector**: Seamlessly switch between Relaxed (0.8x), Standard (1.0x), and Overclock (1.3x) right on the start menu.
 - **35/65 Split Grid Menus**: Modern split-card start and game-over modals displaying live telemetry, controls, and run statistics.
 - **Translucent Frosted Glass HUD**: Sleek floating cards powered by `backdrop-filter: blur(16px)` housing scores, clock speed, and segmented combo meters.
 - **Visual FX & Screen Shake**: Luminescent particle trails, shattering firewall voxels, and a 22px screen shake when smashing through obstacles.
