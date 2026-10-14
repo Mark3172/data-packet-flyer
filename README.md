@@ -29,11 +29,20 @@ Take control of a high-frequency **Data Packet** infiltrating the root mainframe
 
 ## 🕹️ Controls & Mechanics
 
-| Control | Action | Details |
-| :--- | :--- | :--- |
 | <kbd>Space</kbd> / <kbd>↑</kbd> / <kbd>W</kbd> / **Left Click** | **Vertical Thrust** | Feather-light upward impulse with responsive, smooth tilting. |
+| <kbd>L</kbd> | **Squad Leaderboard** | Open the 35/65 Hall of Fame modal to view rankings, name your squad, and invite friends. |
 | <kbd>ESC</kbd> | **Boss Stealth Key** | Instantly hides the canvas and displays an authentic benign **Windows System Update** screen. Press <kbd>ESC</kbd> again to resume safely. |
 | <kbd>M</kbd> | **Audio Toggle** | Toggle procedural Web Audio sound FX (muted by default for office safety). |
+
+---
+
+## 🏆 Squad Leaderboards & Friend Invites
+
+- **Custom Call Signs**: Name your agent pilot (e.g. `MARK_01`, `ALEX`, `GHOST`) directly from the start screen or leaderboard hub.
+- **Custom Squad / Leaderboard Names**: Name your squad leaderboard (e.g. `CYBER_SQUAD`, `TITAN_CREW`).
+- **🔗 1-Click Friend Invite Link**: Click **Invite Friend Link** to copy a smart URL containing your squad and top scores. When friends open the link, they automatically join your named squad board!
+- **📋 Squad Codes**: Copy and import portable squad codes across browsers and group chats (Discord, WhatsApp, Telegram).
+- **🤖 Cyber Rivals Benchmark**: Compare your flight scores against legendary AI hacker benchmarks (`ROOT_DAEMON`, `ZERO_COOL`, `GHOST_NET`).
 
 ---
 

@@ -627,8 +627,131 @@
       transform: translateY(-2px);
     }
 
-    .btn-launch:active {
-      transform: translateY(0);
+    /* ==========================================================================
+       LEADERBOARD & FORM CONTROLS
+       ========================================================================== */
+    .cyber-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      color: var(--neon-cyan);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 9px 12px;
+      outline: none;
+      transition: all 0.2s ease;
+      letter-spacing: 1px;
+    }
+
+    .cyber-input:focus {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 14px var(--neon-cyan-dim);
+      background: rgba(0, 243, 255, 0.08);
+      color: #fff;
+    }
+
+    .lb-tabs {
+      display: flex;
+      gap: 8px;
+      margin: 14px 0 10px 0;
+    }
+
+    .lb-tab-btn {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.8px;
+      text-align: center;
+    }
+
+    .lb-tab-btn:hover {
+      color: var(--text-main);
+      border-color: rgba(0, 243, 255, 0.4);
+      background: rgba(0, 243, 255, 0.05);
+    }
+
+    .lb-tab-btn.active {
+      background: rgba(0, 243, 255, 0.15);
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+      box-shadow: 0 0 10px var(--neon-cyan-dim);
+    }
+
+    .lb-table-container {
+      max-height: 220px;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      background: rgba(10, 12, 18, 0.6);
+      margin-bottom: 12px;
+    }
+
+    .lb-table-container::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .lb-table-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 3px;
+    }
+
+    .lb-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .lb-table th {
+      position: sticky;
+      top: 0;
+      background: rgba(18, 20, 29, 0.96);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--text-muted);
+      font-size: 9px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 700;
+      z-index: 2;
+    }
+
+    .lb-table td {
+      padding: 7px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-variant-numeric: tabular-nums;
+      color: var(--text-main);
+    }
+
+    .lb-row-self {
+      background: rgba(0, 243, 255, 0.09) !important;
+      color: var(--neon-cyan) !important;
+      font-weight: 700;
+    }
+
+    .lb-rank-1 { color: #ffd700 !important; font-weight: 800; }
+    .lb-rank-2 { color: #e0e0e0 !important; font-weight: 700; }
+    .lb-rank-3 { color: #cd7f32 !important; font-weight: 700; }
+
+    .lb-status-won {
+      color: var(--neon-emerald);
+      font-weight: 700;
+    }
+
+    .lb-status-loss {
+      color: var(--text-muted);
     }
 
     /* Pause Overlay */
@@ -873,14 +996,22 @@
 
     <!-- Bottom Utility Pills -->
     <div id="hud-footer">
-      <div class="hud-pill" id="btn-boss-info" title="Instantly hide game into corporate update">
-        <span class="key-badge">ESC</span>
-        <span>Boss Stealth Key</span>
+      <div style="display: flex; gap: 8px;">
+        <div class="hud-pill" id="btn-hud-leaderboard" title="View Hall of Fame & Squad Leaderboard">
+          <span class="key-badge">L</span>
+          <span>🏆 Leaderboard</span>
+        </div>
       </div>
-      <div class="hud-pill" id="btn-audio-toggle">
-        <span class="audio-indicator" id="audio-dot"></span>
-        <span id="audio-label">Audio: Muted</span>
-        <span class="key-badge">M</span>
+      <div style="display: flex; gap: 8px;">
+        <div class="hud-pill" id="btn-boss-info" title="Instantly hide game into corporate update">
+          <span class="key-badge">ESC</span>
+          <span>Boss Stealth Key</span>
+        </div>
+        <div class="hud-pill" id="btn-audio-toggle">
+          <span class="audio-indicator" id="audio-dot"></span>
+          <span id="audio-label">Audio: Muted</span>
+          <span class="key-badge">M</span>
+        </div>
       </div>
     </div>
 
@@ -949,6 +1080,17 @@
             </div>
           </div>
 
+          <!-- Pilot Call Sign & Leaderboard Quick Bar -->
+          <div style="display: flex; gap: 8px; margin: 12px 0 10px 0; align-items: flex-end;">
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+              <span class="pace-title" style="font-size: 9px;">PILOT CALL SIGN</span>
+              <input type="text" id="start-callsign-input" class="cyber-input" style="padding: 7px 10px; font-size: 11px;" maxlength="14" placeholder="PILOT_01">
+            </div>
+            <button type="button" id="btn-start-leaderboard" class="pace-btn" style="flex: none; padding: 7px 12px; display: flex; align-items: center; gap: 5px; height: 35px;">
+              <span>🏆</span> <span>LEADERBOARD</span>
+            </button>
+          </div>
+
           <button id="btn-start" class="btn-launch">
             <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE / ↑ / CLICK</span>
             <span>INITIALIZE TRANSMISSION</span>
@@ -1011,10 +1153,15 @@
             </div>
           </div>
 
-          <button id="btn-restart" class="btn-launch">
-            <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE / ↑ / CLICK</span>
-            <span>RETRANSMIT PACKET</span>
-          </button>
+          <div style="display: flex; gap: 10px;">
+            <button id="btn-restart" class="btn-launch" style="flex: 1.4;">
+              <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE / ↑ / CLICK</span>
+              <span>RETRANSMIT PACKET</span>
+            </button>
+            <button id="btn-gameover-leaderboard" class="btn-launch btn-secondary" style="flex: 1;">
+              <span>🏆 SQUAD BOARD</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1079,11 +1226,91 @@
           </div>
 
           <div style="display: flex; gap: 10px;">
-            <button id="btn-continue-endless" class="btn-launch" style="flex: 1.3;">
+            <button id="btn-continue-endless" class="btn-launch" style="flex: 1.2;">
               <span>CONTINUE ENDLESS</span>
             </button>
-            <button id="btn-victory-restart" class="btn-launch btn-secondary" style="flex: 1;">
+            <button id="btn-victory-leaderboard" class="btn-launch" style="flex: 1.1; background: rgba(0, 255, 170, 0.15); border-color: var(--neon-emerald); color: var(--neon-emerald);">
+              <span>🏆 SQUAD BOARD</span>
+            </button>
+            <button id="btn-victory-restart" class="btn-launch btn-secondary" style="flex: 0.9;">
               <span>PLAY AGAIN</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD MODAL (35/65 Split Grid) -->
+    <div id="leaderboard-modal" class="modal-overlay">
+      <div class="split-grid-modal">
+        <!-- 35% Left Column: Pilot & Squad Config -->
+        <div class="modal-left">
+          <div>
+            <div class="telemetry-header">LEADERBOARD // SQUAD HUB</div>
+            <div class="directive-box">
+              Compete with friends! Name your squad, set your call sign, and share your invite link.
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+              <div>
+                <span class="pace-title" style="display:block; margin-bottom: 4px; font-size: 9px;">YOUR CALL SIGN</span>
+                <input type="text" id="lb-input-callsign" class="cyber-input" maxlength="14" placeholder="PILOT_01">
+              </div>
+              <div>
+                <span class="pace-title" style="display:block; margin-bottom: 4px; font-size: 9px;">SQUAD / LEADERBOARD NAME</span>
+                <input type="text" id="lb-input-squadname" class="cyber-input" maxlength="20" placeholder="CYBER_SQUAD">
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <button type="button" id="btn-share-invite" class="btn-launch" style="padding: 11px 12px; font-size: 11px;">
+              <span>🔗 INVITE FRIEND LINK</span>
+            </button>
+            <button type="button" id="btn-copy-code" class="btn-launch btn-secondary" style="padding: 9px 12px; font-size: 10px;">
+              <span>📋 COPY SQUAD CODE</span>
+            </button>
+            <button type="button" id="btn-paste-code" class="btn-launch btn-secondary" style="padding: 9px 12px; font-size: 10px;">
+              <span>📥 IMPORT SQUAD CODE</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 65% Right Column: Rankings Table -->
+        <div class="modal-right">
+          <div>
+            <div class="hero-title-group">
+              <div class="hero-tagline" id="lb-subtitle">SQUAD RANKINGS // CYBERSPACE</div>
+              <h1 id="lb-title" style="font-size: 26px;">SQUAD // <span>LEADERBOARD</span></h1>
+            </div>
+
+            <div class="lb-tabs">
+              <button type="button" class="lb-tab-btn active" id="tab-squad" data-tab="squad">👥 SQUAD BOARD</button>
+              <button type="button" class="lb-tab-btn" id="tab-rivals" data-tab="rivals">🤖 CYBER RIVALS</button>
+            </div>
+
+            <div class="lb-table-container">
+              <table class="lb-table">
+                <thead>
+                  <tr>
+                    <th style="width: 32px;">#</th>
+                    <th>AGENT</th>
+                    <th>SCORE</th>
+                    <th>WALLS</th>
+                    <th>PACE</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="lb-table-body">
+                  <!-- Populated dynamically via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 6px;">
+            <button type="button" id="btn-close-leaderboard" class="btn-launch" style="flex: 1;">
+              <span>CLOSE LEADERBOARD</span>
             </button>
           </div>
         </div>
@@ -1638,13 +1865,48 @@
             finalScore: document.getElementById('final-score'),
             finalHighScore: document.getElementById('final-highscore'),
             finalNodes: document.getElementById('final-nodes'),
-            finalSmashed: document.getElementById('final-smashed')
+            finalSmashed: document.getElementById('final-smashed'),
+            startCallsignInput: document.getElementById('start-callsign-input'),
+            btnStartLeaderboard: document.getElementById('btn-start-leaderboard'),
+            btnHudLeaderboard: document.getElementById('btn-hud-leaderboard'),
+            btnGameoverLeaderboard: document.getElementById('btn-gameover-leaderboard'),
+            btnVictoryLeaderboard: document.getElementById('btn-victory-leaderboard'),
+            leaderboardModal: document.getElementById('leaderboard-modal'),
+            lbInputCallsign: document.getElementById('lb-input-callsign'),
+            lbInputSquadname: document.getElementById('lb-input-squadname'),
+            btnShareInvite: document.getElementById('btn-share-invite'),
+            btnCopyCode: document.getElementById('btn-copy-code'),
+            btnPasteCode: document.getElementById('btn-paste-code'),
+            lbTitle: document.getElementById('lb-title'),
+            lbSubtitle: document.getElementById('lb-subtitle'),
+            tabSquad: document.getElementById('tab-squad'),
+            tabRivals: document.getElementById('tab-rivals'),
+            lbTableBody: document.getElementById('lb-table-body'),
+            btnCloseLeaderboard: document.getElementById('btn-close-leaderboard')
           };
+
+          // Pilot Profile & Squad Leaderboard Data
+          this.pilotName = (localStorage.getItem('packet_pilot_name') || 'PILOT_01').toUpperCase();
+          this.squadName = (localStorage.getItem('packet_squad_name') || 'CYBER_SQUAD').toUpperCase();
+          this.currentLbTab = 'squad';
+          this.squadScores = this.loadSquadScores();
+          this.rivalScores = [
+            { name: 'ROOT_DAEMON', score: 3240, walls: 42, pace: 'overclock', won: true },
+            { name: 'ZERO_COOL',   score: 2180, walls: 29, pace: 'standard',  won: true },
+            { name: 'GHOST_NET',   score: 1650, walls: 22, pace: 'standard',  won: true },
+            { name: 'BYTE_BANDIT', score: 1120, walls: 16, pace: 'relaxed',   won: false },
+            { name: 'GLITCH_FOX',  score: 680,  walls: 9,  pace: 'relaxed',   won: false }
+          ];
 
           // Initialize DOM values
           if (this.dom.hudHighScore) this.dom.hudHighScore.textContent = this.highScore;
           if (this.dom.introHighScore) this.dom.introHighScore.textContent = this.highScore;
+          if (this.dom.startCallsignInput) this.dom.startCallsignInput.value = this.pilotName;
+          if (this.dom.lbInputCallsign) this.dom.lbInputCallsign.value = this.pilotName;
+          if (this.dom.lbInputSquadname) this.dom.lbInputSquadname.value = this.squadName;
           this.setPace(this.currentPace, false);
+          this.updateLeaderboardDisplay();
+          this.checkUrlInvite();
 
           // Bind Events
           this.bindEvents();
@@ -1670,6 +1932,9 @@
         bindEvents() {
           // Jump Action: Spacebar, Up Arrow, W, J, or Mouse Click / Touch
           window.addEventListener('keydown', (e) => {
+            // Ignore key controls when typing inside text inputs
+            if (e.target && e.target.tagName === 'INPUT') return;
+
             if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'KeyJ') {
               e.preventDefault();
               this.handlePrimaryAction();
@@ -1679,13 +1944,26 @@
             } else if (e.key === 'm' || e.key === 'M') {
               e.preventDefault();
               this.toggleAudio();
+            } else if (e.key === 'l' || e.key === 'L') {
+              e.preventDefault();
+              if (this.dom.leaderboardModal && this.dom.leaderboardModal.classList.contains('active')) {
+                this.closeLeaderboard();
+              } else {
+                this.openLeaderboard('squad');
+              }
             }
           });
 
           // Canvas & Container Click
           this.dom.container.addEventListener('pointerdown', (e) => {
-            // Ignore if clicking UI buttons specifically
-            if (e.target.closest('#hud-footer') || e.target.closest('#hud-score-card') || e.target.closest('#hud-combo-card')) {
+            // Ignore if clicking UI buttons, modals, or inputs specifically
+            if (e.target.closest('#hud-footer') || 
+                e.target.closest('#hud-score-card') || 
+                e.target.closest('#hud-combo-card') || 
+                e.target.closest('#hud-mission-card') || 
+                e.target.closest('#leaderboard-modal') || 
+                e.target.tagName === 'INPUT' || 
+                e.target.tagName === 'BUTTON') {
               return;
             }
             this.handlePrimaryAction();
@@ -1739,10 +2017,419 @@
             this.toggleBossKey();
           });
 
+          // Leaderboard Navigation Buttons
+          if (this.dom.btnHudLeaderboard) {
+            this.dom.btnHudLeaderboard.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.openLeaderboard('squad');
+            });
+          }
+          if (this.dom.btnStartLeaderboard) {
+            this.dom.btnStartLeaderboard.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.openLeaderboard('squad');
+            });
+          }
+          if (this.dom.btnGameoverLeaderboard) {
+            this.dom.btnGameoverLeaderboard.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.openLeaderboard('squad');
+            });
+          }
+          if (this.dom.btnVictoryLeaderboard) {
+            this.dom.btnVictoryLeaderboard.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.openLeaderboard('squad');
+            });
+          }
+          if (this.dom.btnCloseLeaderboard) {
+            this.dom.btnCloseLeaderboard.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.closeLeaderboard();
+            });
+          }
+
+          // Leaderboard Tabs
+          if (this.dom.tabSquad) {
+            this.dom.tabSquad.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.switchLbTab('squad');
+            });
+          }
+          if (this.dom.tabRivals) {
+            this.dom.tabRivals.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.switchLbTab('rivals');
+            });
+          }
+
+          // Callsign & Squad Name inputs
+          if (this.dom.startCallsignInput) {
+            this.dom.startCallsignInput.addEventListener('input', (e) => {
+              this.updatePilotName(e.target.value);
+            });
+          }
+          if (this.dom.lbInputCallsign) {
+            this.dom.lbInputCallsign.addEventListener('input', (e) => {
+              this.updatePilotName(e.target.value);
+            });
+          }
+          if (this.dom.lbInputSquadname) {
+            this.dom.lbInputSquadname.addEventListener('input', (e) => {
+              this.updateSquadName(e.target.value);
+            });
+          }
+
+          // Share & Squad Code Actions
+          if (this.dom.btnShareInvite) {
+            this.dom.btnShareInvite.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.generateShareUrl();
+            });
+          }
+          if (this.dom.btnCopyCode) {
+            this.dom.btnCopyCode.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.copySquadCode();
+            });
+          }
+          if (this.dom.btnPasteCode) {
+            this.dom.btnPasteCode.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.pasteSquadCode();
+            });
+          }
+
           // Clicking fake update screen does not reveal the game (stays stealthy)
           this.dom.bossScreen.addEventListener('click', (e) => {
             e.stopPropagation();
           });
+        }
+
+        /* ----------------------------------------------------------------------
+           LEADERBOARD & SQUAD SYSTEM METHODS
+           ---------------------------------------------------------------------- */
+        loadSquadScores() {
+          try {
+            const raw = localStorage.getItem('packet_squad_scores');
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+            }
+          } catch (e) {}
+          return [
+            { name: this.pilotName || 'PILOT_01', score: this.highScore > 0 ? this.highScore : 480, walls: Math.max(3, Math.floor(this.highScore / 50)), pace: 'standard', won: this.highScore >= 1000, timestamp: Date.now() }
+          ];
+        }
+
+        saveSquadScores() {
+          try {
+            localStorage.setItem('packet_squad_scores', JSON.stringify(this.squadScores));
+          } catch (e) {}
+        }
+
+        recordScore(score, walls, won) {
+          if (score <= 0 && walls <= 0) return;
+          const entry = {
+            id: 'run_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+            name: (this.pilotName || 'PILOT_01').toUpperCase().trim(),
+            score: Math.max(0, score),
+            walls: Math.max(0, walls),
+            pace: this.currentPace || 'standard',
+            won: !!won,
+            timestamp: Date.now()
+          };
+
+          this.squadScores.push(entry);
+          this.squadScores.sort((a, b) => b.score - a.score || b.walls - a.walls);
+          if (this.squadScores.length > 30) {
+            this.squadScores = this.squadScores.slice(0, 30);
+          }
+          this.saveSquadScores();
+          this.updateLeaderboardDisplay();
+        }
+
+        updateLeaderboardDisplay() {
+          if (!this.dom.lbTableBody) return;
+
+          // Update Titles
+          if (this.dom.lbTitle) {
+            const words = (this.squadName || 'CYBER SQUAD').toUpperCase().split(' ');
+            const first = words.slice(0, Math.max(1, words.length - 1)).join(' ');
+            const last = words.length > 1 ? words[words.length - 1] : 'SQUAD';
+            this.dom.lbTitle.innerHTML = `${this.escapeHtml(first)} // <span>${this.escapeHtml(last)}</span>`;
+          }
+          if (this.dom.lbSubtitle) {
+            this.dom.lbSubtitle.textContent = this.currentLbTab === 'squad' 
+              ? `SQUAD RANKINGS // ${(this.squadName || 'CYBER_SQUAD').toUpperCase()}`
+              : `CYBER RIVALS // MAINFRAME LEGENDS`;
+          }
+
+          const list = this.currentLbTab === 'squad' ? this.squadScores : this.rivalScores;
+          this.dom.lbTableBody.innerHTML = '';
+
+          if (!list || list.length === 0) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td colspan="6" style="text-align: center; color: var(--text-muted); padding: 18px 10px;">NO TRANSMISSIONS LOGGED YET</td>`;
+            this.dom.lbTableBody.appendChild(tr);
+            return;
+          }
+
+          list.forEach((entry, index) => {
+            const tr = document.createElement('tr');
+            const isSelf = this.currentLbTab === 'squad' && entry.name === (this.pilotName || '').toUpperCase();
+            if (isSelf) tr.classList.add('lb-row-self');
+
+            let rankBadge = `${index + 1}`;
+            let rankClass = '';
+            if (index === 0) { rankBadge = '🥇 1'; rankClass = 'lb-rank-1'; }
+            else if (index === 1) { rankBadge = '🥈 2'; rankClass = 'lb-rank-2'; }
+            else if (index === 2) { rankBadge = '🥉 3'; rankClass = 'lb-rank-3'; }
+
+            const paceLabel = (entry.pace || 'standard').substring(0, 3).toUpperCase();
+            const statusHtml = entry.won 
+              ? `<span class="lb-status-won">🏆 WON</span>` 
+              : `<span class="lb-status-loss">💥 CRASH</span>`;
+
+            tr.innerHTML = `
+              <td class="${rankClass}">${rankBadge}</td>
+              <td style="font-weight: 700; color: ${isSelf ? 'var(--neon-cyan)' : 'var(--text-main)'};">${this.escapeHtml(entry.name)}</td>
+              <td style="font-weight: 800; color: var(--neon-cyan);">${Number(entry.score).toLocaleString()}</td>
+              <td>${entry.walls}</td>
+              <td style="font-size: 10px; color: var(--text-muted);">${paceLabel}</td>
+              <td>${statusHtml}</td>
+            `;
+            this.dom.lbTableBody.appendChild(tr);
+          });
+        }
+
+        escapeHtml(str) {
+          return String(str || '').replace(/[&<>"']/g, (m) => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+          }[m]));
+        }
+
+        openLeaderboard(tab = 'squad') {
+          this.currentLbTab = tab;
+          if (this.dom.tabSquad && this.dom.tabRivals) {
+            this.dom.tabSquad.classList.toggle('active', tab === 'squad');
+            this.dom.tabRivals.classList.toggle('active', tab === 'rivals');
+          }
+          if (this.dom.lbInputCallsign) this.dom.lbInputCallsign.value = this.pilotName;
+          if (this.dom.lbInputSquadname) this.dom.lbInputSquadname.value = this.squadName;
+          this.updateLeaderboardDisplay();
+          if (this.dom.leaderboardModal) {
+            this.dom.leaderboardModal.classList.add('active');
+          }
+        }
+
+        closeLeaderboard() {
+          if (this.dom.leaderboardModal) {
+            this.dom.leaderboardModal.classList.remove('active');
+          }
+        }
+
+        switchLbTab(tab) {
+          this.currentLbTab = tab;
+          if (this.dom.tabSquad && this.dom.tabRivals) {
+            this.dom.tabSquad.classList.toggle('active', tab === 'squad');
+            this.dom.tabRivals.classList.toggle('active', tab === 'rivals');
+          }
+          this.updateLeaderboardDisplay();
+          this.sound.playCollect(880);
+        }
+
+        updatePilotName(name) {
+          const clean = (name || 'PILOT_01').trim().substring(0, 14).toUpperCase();
+          this.pilotName = clean || 'PILOT_01';
+          try { localStorage.setItem('packet_pilot_name', this.pilotName); } catch (e) {}
+          if (this.dom.startCallsignInput && this.dom.startCallsignInput.value !== this.pilotName) {
+            this.dom.startCallsignInput.value = this.pilotName;
+          }
+          if (this.dom.lbInputCallsign && this.dom.lbInputCallsign.value !== this.pilotName) {
+            this.dom.lbInputCallsign.value = this.pilotName;
+          }
+          this.updateLeaderboardDisplay();
+        }
+
+        updateSquadName(name) {
+          const clean = (name || 'CYBER_SQUAD').trim().substring(0, 20).toUpperCase();
+          this.squadName = clean || 'CYBER_SQUAD';
+          try { localStorage.setItem('packet_squad_name', this.squadName); } catch (e) {}
+          if (this.dom.lbInputSquadname && this.dom.lbInputSquadname.value !== this.squadName) {
+            this.dom.lbInputSquadname.value = this.squadName;
+          }
+          this.updateLeaderboardDisplay();
+        }
+
+        generateShareUrl() {
+          const topScores = this.squadScores.slice(0, 10);
+          const payload = {
+            s: this.squadName,
+            h: this.pilotName,
+            list: topScores.map(e => ({ n: e.name, sc: e.score, w: e.walls, p: e.pace, v: e.won ? 1 : 0 }))
+          };
+          const jsonStr = JSON.stringify(payload);
+          let encoded = '';
+          try {
+            encoded = encodeURIComponent(btoa(unescape(encodeURIComponent(jsonStr))));
+          } catch (e) {
+            encoded = encodeURIComponent(btoa(jsonStr));
+          }
+
+          const base = window.location.origin + window.location.pathname;
+          const shareUrl = `${base}?sq=${encoded}`;
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(shareUrl).then(() => {
+              this.showToast('🔗 SQUAD INVITE LINK COPIED!');
+              this.sound.playVictory();
+            }).catch(() => {
+              prompt('Copy this Squad Invite Link to invite friends:', shareUrl);
+            });
+          } else {
+            prompt('Copy this Squad Invite Link to invite friends:', shareUrl);
+          }
+
+          if (navigator.share && /mobile|android|iphone/i.test(navigator.userAgent)) {
+            navigator.share({
+              title: `Join ${this.squadName} on Data Packet Flyer!`,
+              text: `Can you beat my score in Data Packet Flyer? Join ${this.squadName} leaderboard:`,
+              url: shareUrl
+            }).catch(() => {});
+          }
+        }
+
+        copySquadCode() {
+          const payload = {
+            s: this.squadName,
+            h: this.pilotName,
+            list: this.squadScores.slice(0, 15).map(e => ({ n: e.name, sc: e.score, w: e.walls, p: e.pace, v: e.won ? 1 : 0 }))
+          };
+          let code = '';
+          try {
+            code = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+          } catch (e) {
+            code = btoa(JSON.stringify(payload));
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(code).then(() => {
+              this.showToast('📋 SQUAD CODE COPIED TO CLIPBOARD!');
+              this.sound.playCollect(950);
+            }).catch(() => {
+              prompt('Copy this Squad Code:', code);
+            });
+          } else {
+            prompt('Copy this Squad Code:', code);
+          }
+        }
+
+        pasteSquadCode() {
+          const input = prompt('Paste Squad Code or Invite Link here:');
+          if (!input) return;
+          let code = input.trim();
+          if (code.includes('sq=')) {
+            try {
+              const url = new URL(code, window.location.origin);
+              code = decodeURIComponent(url.searchParams.get('sq') || '');
+            } catch (e) {}
+          }
+          try {
+            const json = decodeURIComponent(escape(atob(code)));
+            const data = JSON.parse(json);
+            if (data && data.s && Array.isArray(data.list)) {
+              this.updateSquadName(data.s);
+              data.list.forEach(item => {
+                this.squadScores.push({
+                  id: 'run_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                  name: (item.n || 'AGENT').toUpperCase(),
+                  score: Number(item.sc) || 0,
+                  walls: Number(item.w) || 0,
+                  pace: item.p || 'standard',
+                  won: !!item.v,
+                  timestamp: Date.now()
+                });
+              });
+              this.squadScores.sort((a, b) => b.score - a.score || b.walls - a.walls);
+              this.squadScores = this.squadScores.slice(0, 30);
+              this.saveSquadScores();
+              this.updateLeaderboardDisplay();
+              this.showToast(`🎉 IMPORTED ${data.s} LEADERBOARD!`);
+              this.sound.playVictory();
+            } else {
+              alert('Invalid squad data format.');
+            }
+          } catch (err) {
+            alert('Could not decode squad code: ' + err.message);
+          }
+        }
+
+        checkUrlInvite() {
+          try {
+            const params = new URLSearchParams(window.location.search);
+            const sq = params.get('sq');
+            if (sq) {
+              const json = decodeURIComponent(escape(atob(decodeURIComponent(sq))));
+              const data = JSON.parse(json);
+              if (data && data.s) {
+                this.updateSquadName(data.s);
+                if (Array.isArray(data.list)) {
+                  data.list.forEach(item => {
+                    this.squadScores.push({
+                      id: 'run_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                      name: (item.n || 'AGENT').toUpperCase(),
+                      score: Number(item.sc) || 0,
+                      walls: Number(item.w) || 0,
+                      pace: item.p || 'standard',
+                      won: !!item.v,
+                      timestamp: Date.now()
+                    });
+                  });
+                  this.squadScores.sort((a, b) => b.score - a.score || b.walls - a.walls);
+                  this.squadScores = this.squadScores.slice(0, 30);
+                  this.saveSquadScores();
+                  this.updateLeaderboardDisplay();
+                }
+                const hostName = data.h || 'YOUR FRIEND';
+                setTimeout(() => {
+                  this.showToast(`🏆 JOINED ${data.s}! HOST: ${hostName}`);
+                  this.openLeaderboard('squad');
+                }, 400);
+                window.history.replaceState({}, document.title, window.location.pathname);
+                return;
+              }
+            }
+
+            const squadParam = params.get('squad');
+            const hostParam = params.get('host') || params.get('name');
+            const scoreParam = parseInt(params.get('score') || '0', 10);
+            if (squadParam || hostParam) {
+              const sName = squadParam || `${hostParam}'S SQUAD`;
+              this.updateSquadName(sName);
+              if (hostParam && scoreParam > 0) {
+                this.squadScores.push({
+                  id: 'run_' + Date.now(),
+                  name: hostParam.toUpperCase(),
+                  score: scoreParam,
+                  walls: parseInt(params.get('walls') || '0', 10),
+                  pace: params.get('pace') || 'standard',
+                  won: params.get('won') === '1',
+                  timestamp: Date.now()
+                });
+                this.squadScores.sort((a, b) => b.score - a.score);
+                this.saveSquadScores();
+                this.updateLeaderboardDisplay();
+              }
+              setTimeout(() => {
+                this.showToast(`🏆 JOINED ${sName}!`);
+                this.openLeaderboard('squad');
+              }, 400);
+              window.history.replaceState({}, document.title, window.location.pathname);
+            }
+          } catch (e) {
+            console.warn('URL invite processing error:', e);
+          }
         }
 
         continueEndless() {
@@ -1852,6 +2539,7 @@
           this.dom.startModal.classList.remove('active');
           this.dom.gameoverModal.classList.remove('active');
           this.dom.victoryModal.classList.remove('active');
+          if (this.dom.leaderboardModal) this.dom.leaderboardModal.classList.remove('active');
           this.dom.pauseBanner.classList.remove('active');
         }
 
@@ -2222,6 +2910,9 @@
           this.dom.victoryNodes.textContent = this.nodesCollected;
           this.dom.victorySmashed.textContent = this.firewallsSmashed;
 
+          // Record run to Squad Leaderboard
+          this.recordScore(this.score, this.firewallsPassed, true);
+
           setTimeout(() => {
             if (this.hasWon && !this.isEndlessMode && this.state === 'PLAYING') {
               this.state = 'PAUSED';
@@ -2271,6 +2962,9 @@
           this.dom.finalHighScore.textContent = this.highScore;
           this.dom.finalNodes.textContent = this.nodesCollected;
           this.dom.finalSmashed.textContent = this.firewallsSmashed;
+
+          // Record run to Squad Leaderboard
+          this.recordScore(this.score, this.firewallsPassed, false);
 
           setTimeout(() => {
             if (this.state === 'GAMEOVER') {
