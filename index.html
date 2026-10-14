@@ -1574,6 +1574,25 @@
             });
           } catch (e) {}
         }
+
+        playAlert() {
+          if (this.muted || !this.ctx) return;
+          try {
+            const now = this.ctx.currentTime;
+            [360, 720, 360, 720, 540].forEach((freq, i) => {
+              const osc = this.ctx.createOscillator();
+              const gain = this.ctx.createGain();
+              osc.type = 'sawtooth';
+              osc.frequency.setValueAtTime(freq, now + i * 0.07);
+              gain.gain.setValueAtTime(0.18, now + i * 0.07);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + (i + 1) * 0.07);
+              osc.connect(gain);
+              gain.connect(this.ctx.destination);
+              osc.start(now + i * 0.07);
+              osc.stop(now + (i + 1) * 0.07 + 0.01);
+            });
+          } catch (e) {}
+        }
       }
 
       /* ------------------------------------------------------------------------
@@ -2615,20 +2634,46 @@
            ---------------------------------------------------------------------- */
         spawnObstacle(x) {
           const cfg = this.PACE_CONFIG[this.currentPace] || this.PACE_CONFIG.standard;
-          // Dynamic gap sizing that stays fair and readable
-          const gap = Math.max(cfg.gap - 25, this.baseGapHeight - Math.min(18, Math.floor(this.firewallsPassed / 10) * 2));
+          const passed = this.firewallsPassed;
+
+          // Escalation phases:
+          // Phase 1 (0-9): Wide gaps (cfg.gap ~215px), static firewalls, relaxed spacing
+          // Phase 2 (10-19): Tighter gaps (~184px), 50% oscillating moving firewalls, faster rhythm
+          // Phase 3 (20+): Deep Core Overclock (~170px), 75% oscillating firewalls with dynamic waves
+          let gap = cfg.gap;
+          let isMoving = false;
+          let moveAmp = 0;
+          let moveSpeed = 0.034;
+
+          if (passed >= 20) {
+            gap = Math.max(170, cfg.gap - 40);
+            isMoving = Math.random() < 0.75;
+            moveAmp = Math.random() * 15 + 32;
+            moveSpeed = Math.random() * 0.015 + 0.036;
+          } else if (passed >= 10) {
+            gap = Math.max(184, cfg.gap - 28);
+            isMoving = Math.random() < 0.50;
+            moveAmp = Math.random() * 12 + 26;
+            moveSpeed = 0.032;
+          }
+
           const minY = 65;
           const maxY = this.V_HEIGHT - gap - 65;
-          const gapY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+          const baseGapY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
           const colWidth = 62;
 
           const obstacle = {
             x: x,
             width: colWidth,
-            gapY: gapY,
+            gapY: baseGapY,
+            baseGapY: baseGapY,
             gapHeight: gap,
             passed: false,
             smashed: false,
+            moving: isMoving,
+            movePhase: Math.random() * Math.PI * 2,
+            moveAmp: moveAmp,
+            moveSpeed: moveSpeed,
             animPhase: Math.random() * Math.PI * 2
           };
 
@@ -2727,6 +2772,16 @@
             const obs = this.obstacles[i];
             obs.x -= this.currentSpeed;
             obs.animPhase += 0.05;
+
+            // Oscillate moving firewalls vertically (Phase 2 & 3 dynamic hazard)
+            if (obs.moving && !obs.smashed) {
+              obs.movePhase += obs.moveSpeed || 0.034;
+              obs.gapY = obs.baseGapY + Math.sin(obs.movePhase) * obs.moveAmp;
+              // Keep within safe screen clearance
+              const minGapY = 55;
+              const maxGapY = this.V_HEIGHT - obs.gapHeight - 55;
+              obs.gapY = Math.max(minGapY, Math.min(maxGapY, obs.gapY));
+            }
 
             // Check if player passed obstacle
             if (!obs.passed && obs.x + obs.width < this.player.x) {
@@ -2922,15 +2977,32 @@
         }
 
         checkSpeedProgression() {
-          // Speed up gently every 10 obstacles passed
-          if (this.firewallsPassed > 0 && this.firewallsPassed % 10 === 0) {
-            const cfg = this.PACE_CONFIG[this.currentPace] || this.PACE_CONFIG.standard;
-            const maxSpeed = cfg.speed * 1.45;
+          const cfg = this.PACE_CONFIG[this.currentPace] || this.PACE_CONFIG.standard;
+          const passed = this.firewallsPassed;
+
+          if (passed === 10) {
+            // Distinct, palpable difficulty surge at 10!
+            this.currentSpeed = this.baseSpeed * 1.30;
+            this.obstacleSpacing = Math.max(340, cfg.spacing - 65);
+            this.speedMultiplier = `${(this.currentSpeed / this.baseSpeed).toFixed(1)}x`;
+            this.screenShake = 14;
+            this.sound.playAlert();
+            this.showToast(`🚨 SECURITY LEVEL 2: LOCKDOWN // SPEED ${this.speedMultiplier} + MOVING FIREWALLS!`);
+          } else if (passed === 20) {
+            // Milestone 20: Climax or Endless Mode ramp
+            this.currentSpeed = this.baseSpeed * 1.50;
+            this.obstacleSpacing = Math.max(315, cfg.spacing - 95);
+            this.speedMultiplier = `${(this.currentSpeed / this.baseSpeed).toFixed(1)}x`;
+            this.screenShake = 16;
+            this.sound.playAlert();
+            this.showToast(`⚠️ MAINFRAME OVERCLOCK // SPEED ${this.speedMultiplier} CORE FLUX!`);
+          } else if (passed > 20 && passed % 5 === 0) {
+            // Escalation in endless mode every 5 firewalls
+            const maxSpeed = cfg.speed * 2.1;
             if (this.currentSpeed < maxSpeed) {
-              this.currentSpeed += cfg.speedStep;
+              this.currentSpeed += cfg.speedStep * 1.4;
             }
-            const ratio = (this.currentSpeed / this.baseSpeed).toFixed(1);
-            this.speedMultiplier = `${ratio}x`;
+            this.speedMultiplier = `${(this.currentSpeed / this.baseSpeed).toFixed(1)}x`;
             this.sound.playSpeedUp();
             this.showToast(`FREQUENCY OVERCLOCK // SPEED ${this.speedMultiplier}`);
           }
@@ -3106,18 +3178,18 @@
             const bottomH = this.V_HEIGHT - bottomY;
 
             // Draw Top Column
-            this.drawFirewallPillar(x, 0, w, gapY, true, obs.animPhase);
+            this.drawFirewallPillar(x, 0, w, gapY, true, obs.animPhase, obs.moving);
 
             // Draw Bottom Column
-            this.drawFirewallPillar(x, bottomY, w, bottomH, false, obs.animPhase);
+            this.drawFirewallPillar(x, bottomY, w, bottomH, false, obs.animPhase, obs.moving);
 
             // Glowing Boundary Emitter Nodes at the Gap
-            this.drawEmitterNode(x, gapY - 6, w);
-            this.drawEmitterNode(x, bottomY, w);
+            this.drawEmitterNode(x, gapY - 6, w, obs.moving);
+            this.drawEmitterNode(x, bottomY, w, obs.moving);
           }
         }
 
-        drawFirewallPillar(x, y, w, h, isTop, phase) {
+        drawFirewallPillar(x, y, w, h, isTop, phase, isMoving = false) {
           this.ctx.save();
 
           // Pillar Body: Deep high-tech metallic core (#161824)
@@ -3125,7 +3197,8 @@
           this.ctx.fillRect(x, y, w, h);
 
           // Subtle inner circuitry lines
-          this.ctx.strokeStyle = 'rgba(255, 42, 95, 0.12)';
+          const circuitColor = isMoving ? 'rgba(255, 140, 0, 0.25)' : 'rgba(255, 42, 95, 0.12)';
+          this.ctx.strokeStyle = circuitColor;
           this.ctx.lineWidth = 1;
           for (let py = y + 15; py < y + h - 10; py += 25) {
             this.ctx.beginPath();
@@ -3134,10 +3207,11 @@
             this.ctx.stroke();
           }
 
-          // Glowing Outer Neon Borders
-          this.ctx.shadowColor = '#ff2a5f';
-          this.ctx.shadowBlur = 12;
-          this.ctx.strokeStyle = '#ff2a5f';
+          // Glowing Outer Neon Borders (Pulsing amber-orange for dynamic moving gates, crimson red for standard)
+          const borderColor = isMoving ? '#ff9900' : '#ff2a5f';
+          this.ctx.shadowColor = borderColor;
+          this.ctx.shadowBlur = isMoving ? 16 + Math.sin(phase * 2) * 5 : 12;
+          this.ctx.strokeStyle = borderColor;
           this.ctx.lineWidth = 2;
 
           this.ctx.beginPath();
@@ -3149,7 +3223,7 @@
           this.ctx.stroke();
 
           // Hazard diagonal chevrons on pillar edge
-          this.ctx.strokeStyle = 'rgba(255, 42, 95, 0.4)';
+          this.ctx.strokeStyle = isMoving ? 'rgba(255, 170, 0, 0.7)' : 'rgba(255, 42, 95, 0.4)';
           this.ctx.lineWidth = 1.5;
           const chevronY = isTop ? y + h - 22 : y + 6;
           this.ctx.beginPath();
@@ -3158,14 +3232,26 @@
           this.ctx.lineTo(x + w - 10, chevronY);
           this.ctx.stroke();
 
+          // If moving, draw dynamic motion indicator arrows
+          if (isMoving) {
+            this.ctx.fillStyle = '#ffaa00';
+            this.ctx.shadowColor = '#ffaa00';
+            this.ctx.shadowBlur = 8;
+            const arrowY = isTop ? y + h - 35 : y + 25;
+            this.ctx.font = 'bold 9px "JetBrains Mono", monospace';
+            this.ctx.textAlign = 'center';
+            this.ctx.fillText('▲▼', x + w / 2, arrowY);
+          }
+
           this.ctx.restore();
         }
 
-        drawEmitterNode(x, y, w) {
+        drawEmitterNode(x, y, w, isMoving = false) {
           this.ctx.save();
-          this.ctx.fillStyle = '#ff2a5f';
-          this.ctx.shadowColor = '#ff2a5f';
-          this.ctx.shadowBlur = 14;
+          const emitterColor = isMoving ? '#ffaa00' : '#ff2a5f';
+          this.ctx.fillStyle = emitterColor;
+          this.ctx.shadowColor = emitterColor;
+          this.ctx.shadowBlur = isMoving ? 18 : 14;
           this.ctx.fillRect(x + 4, y, w - 8, 6);
 
           // Center bright laser diode

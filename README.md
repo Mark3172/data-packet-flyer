@@ -23,7 +23,10 @@ Take control of a high-frequency **Data Packet** infiltrating the root mainframe
 - **Repair & Breaker Shield**: Collecting 3 Data Nodes restores +1 Integrity and activates a **5.0-second Breaker Shield** to smash directly through firewalls!
 - **Feather-Light Thrust**: Press <kbd>Space</kbd>, <kbd>↑</kbd>, <kbd>W</kbd>, <kbd>J</kbd>, or **Click / Tap** to give the packet an effortless, nimble upward lift against gentle gravity.
 - **Selectable Pacing / Difficulty**: Choose between **Relaxed (0.8x)**, **Standard (1.0x)**, and **Overclock (1.3x)** to match your preferred flow.
-- **Dynamic Overclocking**: After the 20-firewall mission or every 10 cleared walls in endless mode, transmission speed ramps up gently to build tension.
+- **Dynamic Phase Escalation (Harder at 10+)**: 
+  - **Walls 1–9 (Infiltration)**: Accessible runway with wide 215px gates and static firewalls to build combo and gather momentum.
+  - **Wall 10+ (Security Level 2 Lockdown)**: Sudden +30% speed surge, alarm alert, tighter 184px gaps, closer obstacle spacing (340px), and dynamic **Moving Firewalls** that oscillate vertically (marked with glowing amber chevrons and ▲▼ motion arrows)!
+  - **Wall 20+ (Deep Core Overclock)**: High-tension endless overclock (+50% speed, 75% moving firewalls, rapid rhythm).
 
 ---
 
