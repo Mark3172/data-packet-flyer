@@ -35,6 +35,7 @@ Take control of a high-frequency **Data Packet** infiltrating the root mainframe
 | <kbd>Space</kbd> / <kbd>↑</kbd> / <kbd>W</kbd> / **Left Click** | **Vertical Thrust** | Feather-light upward impulse with responsive, smooth tilting. |
 | <kbd>L</kbd> | **Squad Leaderboard** | Open the 35/65 Hall of Fame modal to view rankings, name your squad, and invite friends. |
 | <kbd>ESC</kbd> | **Boss Stealth Key** | Instantly hides the game behind an authentic corporate **Windows System Update** screen. Press <kbd>ESC</kbd> or click the sleek **[ ↩ Return to Game ]** button to exit safely. |
+| <kbd>Q</kbd> | **Leave Run / Main Menu** | Return to the Title screen when dead or paused, or click **Leave Game** to exit session. |
 | <kbd>M</kbd> | **Audio Toggle** | Toggle procedural Web Audio sound FX (muted by default for office safety). |
 
 ---

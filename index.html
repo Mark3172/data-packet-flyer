@@ -1068,6 +1068,10 @@
               <span>Escape (ESC)</span>
               <span>Boss Key (Camouflage)</span>
             </div>
+            <div class="guide-item">
+              <span>Q (When Dead)</span>
+              <span>Leave / Main Menu</span>
+            </div>
           </div>
         </div>
 
@@ -1135,8 +1139,12 @@
 
           <div class="controls-guide">
             <div class="guide-item">
-              <span>Space / ↑ / W / Click</span>
+              <span>Space / ↑ / Click</span>
               <span>Restart Run</span>
+            </div>
+            <div class="guide-item">
+              <span>Q</span>
+              <span>Leave / Main Menu</span>
             </div>
             <div class="guide-item">
               <span>Escape (ESC)</span>
@@ -1175,13 +1183,23 @@
             </div>
           </div>
 
-          <div style="display: flex; gap: 10px;">
-            <button id="btn-restart" class="btn-launch" style="flex: 1.4;">
-              <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE / ↑ / CLICK</span>
-              <span>RETRANSMIT PACKET</span>
+          <!-- Primary Action: Retransmit -->
+          <button id="btn-restart" class="btn-launch" style="width: 100%; margin-bottom: 10px;">
+            <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE / ↑</span>
+            <span>RETRANSMIT PACKET (PLAY AGAIN)</span>
+          </button>
+
+          <!-- Secondary Actions: Main Menu, Squad Board, Leave Game -->
+          <div style="display: flex; gap: 8px;">
+            <button id="btn-gameover-menu" class="btn-launch btn-secondary" style="flex: 1.2; padding: 12px 10px; font-size: 11px;" title="Leave run and return to Start / Main Menu">
+              <span class="key-badge" style="background: rgba(255,255,255,0.15); color:#fff;">Q</span>
+              <span>🏠 MAIN MENU</span>
             </button>
-            <button id="btn-gameover-leaderboard" class="btn-launch btn-secondary" style="flex: 1;">
+            <button id="btn-gameover-leaderboard" class="btn-launch btn-secondary" style="flex: 1.1; padding: 12px 10px; font-size: 11px;" title="View Squad Leaderboard">
               <span>🏆 SQUAD BOARD</span>
+            </button>
+            <button id="btn-gameover-quit" class="btn-launch btn-secondary" style="flex: 1; padding: 12px 10px; font-size: 11px; color: var(--neon-red) !important; border-color: rgba(255, 51, 102, 0.4) !important;" title="Leave Game / Exit Session">
+              <span>🚪 LEAVE GAME</span>
             </button>
           </div>
         </div>
@@ -1251,15 +1269,18 @@
             </div>
           </div>
 
-          <div style="display: flex; gap: 10px;">
-            <button id="btn-continue-endless" class="btn-launch" style="flex: 1.2;">
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button id="btn-continue-endless" class="btn-launch" style="flex: 1.2; min-width: 150px;">
               <span>CONTINUE ENDLESS</span>
             </button>
-            <button id="btn-victory-leaderboard" class="btn-launch" style="flex: 1.1; background: rgba(0, 255, 170, 0.15); border-color: var(--neon-emerald); color: var(--neon-emerald);">
+            <button id="btn-victory-restart" class="btn-launch btn-secondary" style="flex: 1; min-width: 110px;">
+              <span>PLAY AGAIN</span>
+            </button>
+            <button id="btn-victory-leaderboard" class="btn-launch btn-secondary" style="flex: 1; min-width: 120px; background: rgba(0, 255, 170, 0.15); border-color: var(--neon-emerald); color: var(--neon-emerald);">
               <span>🏆 SQUAD BOARD</span>
             </button>
-            <button id="btn-victory-restart" class="btn-launch btn-secondary" style="flex: 0.9;">
-              <span>PLAY AGAIN</span>
+            <button id="btn-victory-menu" class="btn-launch btn-secondary" style="flex: 1; min-width: 110px;" title="Return to Title / Main Menu">
+              <span>🏠 MAIN MENU</span>
             </button>
           </div>
         </div>
@@ -1347,6 +1368,41 @@
     <div id="pause-banner">
       <h2>TRANSMISSION SUSPENDED</h2>
       <p>PRESS <span class="key-badge">SPACE</span> OR CLICK CANVAS TO RESUME</p>
+      <div style="margin-top: 16px;">
+        <button id="btn-pause-menu" class="pace-btn" style="padding: 8px 18px; font-size: 11px; cursor: pointer; color: var(--text-main); border-color: rgba(255,255,255,0.25);">
+          🏠 RETURN TO MAIN MENU
+        </button>
+      </div>
+    </div>
+
+    <!-- EXIT / DISCONNECTED MODAL -->
+    <div id="exit-modal" class="modal-overlay">
+      <div class="split-grid-modal" style="max-width: 520px; display: block;">
+        <div class="modal-right" style="padding: 32px 28px; text-align: center;">
+          <div class="hero-tagline" style="color: var(--neon-red);">TRANSMISSION TERMINATED // LINK UNMOUNTED</div>
+          <h1 style="font-size: 28px; margin: 8px 0 14px 0;">CYBERNETIC // <span>DISCONNECTED</span></h1>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">
+            Your flight session has ended and data streams are safely parked.<br>
+            You can safely close this browser tab, or return to the main menu.
+          </p>
+
+          <div class="directive-box" style="margin-bottom: 22px; text-align: left; background: rgba(255,255,255,0.03); padding: 12px 14px; border-radius: 8px;">
+            📊 <strong>Flight Telemetry Summary:</strong><br>
+            • Pilot Call Sign: <span id="exit-pilot-name" style="color:var(--neon-cyan); font-weight:700;">PILOT_01</span><br>
+            • Final Score: <span id="exit-final-score" style="color:var(--neon-cyan); font-weight:700;">0</span><br>
+            • Career High: <span id="exit-high-score" style="color:var(--neon-emerald); font-weight:700;">0</span>
+          </div>
+
+          <div style="display: flex; gap: 10px; justify-content: center;">
+            <button id="btn-exit-return" class="btn-launch" style="flex: 1.2;">
+              <span>🏠 RETURN TO MAIN MENU</span>
+            </button>
+            <button id="btn-exit-close" class="btn-launch btn-secondary" style="flex: 1;" title="Close Window / Tab">
+              <span>🚪 CLOSE TAB</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1930,7 +1986,17 @@
             tabSquad: document.getElementById('tab-squad'),
             tabRivals: document.getElementById('tab-rivals'),
             lbTableBody: document.getElementById('lb-table-body'),
-            btnCloseLeaderboard: document.getElementById('btn-close-leaderboard')
+            btnCloseLeaderboard: document.getElementById('btn-close-leaderboard'),
+            btnGameoverMenu: document.getElementById('btn-gameover-menu'),
+            btnGameoverQuit: document.getElementById('btn-gameover-quit'),
+            btnVictoryMenu: document.getElementById('btn-victory-menu'),
+            btnPauseMenu: document.getElementById('btn-pause-menu'),
+            exitModal: document.getElementById('exit-modal'),
+            exitPilotName: document.getElementById('exit-pilot-name'),
+            exitFinalScore: document.getElementById('exit-final-score'),
+            exitHighScore: document.getElementById('exit-high-score'),
+            btnExitReturn: document.getElementById('btn-exit-return'),
+            btnExitClose: document.getElementById('btn-exit-close')
           };
 
           // Pilot Profile & Squad Leaderboard Data
@@ -1989,6 +2055,11 @@
             } else if (e.code === 'Escape') {
               e.preventDefault();
               this.toggleBossKey();
+            } else if (e.key === 'q' || e.key === 'Q') {
+              if (this.state === 'GAMEOVER' || this.state === 'PAUSED') {
+                e.preventDefault();
+                this.returnToMenu();
+              }
             } else if (e.key === 'm' || e.key === 'M') {
               e.preventDefault();
               this.toggleAudio();
@@ -2028,6 +2099,20 @@
             this.startNewGame();
           });
 
+          // Game Over Modal: Return to Menu & Leave Game
+          if (this.dom.btnGameoverMenu) {
+            this.dom.btnGameoverMenu.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.returnToMenu();
+            });
+          }
+          if (this.dom.btnGameoverQuit) {
+            this.dom.btnGameoverQuit.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.quitGame();
+            });
+          }
+
           // Transmission Pace Selector
           this.dom.paceButtons.forEach((btn) => {
             btn.addEventListener('click', (e) => {
@@ -2050,6 +2135,36 @@
             this.dom.btnVictoryRestart.addEventListener('click', (e) => {
               e.stopPropagation();
               this.startNewGame();
+            });
+          }
+          if (this.dom.btnVictoryMenu) {
+            this.dom.btnVictoryMenu.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.returnToMenu();
+            });
+          }
+
+          // Pause Banner Button
+          if (this.dom.btnPauseMenu) {
+            this.dom.btnPauseMenu.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.returnToMenu();
+            });
+          }
+
+          // Exit Modal Buttons
+          if (this.dom.btnExitReturn) {
+            this.dom.btnExitReturn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              if (this.dom.exitModal) this.dom.exitModal.classList.remove('active');
+              this.returnToMenu();
+            });
+          }
+          if (this.dom.btnExitClose) {
+            this.dom.btnExitClose.addEventListener('click', (e) => {
+              e.stopPropagation();
+              window.close();
+              this.showToast('Please close this tab (Ctrl+W / ⌘+W)');
             });
           }
 
@@ -2600,6 +2715,84 @@
           if (this.dom.victoryModal) this.dom.victoryModal.classList.remove('active');
           if (this.dom.leaderboardModal) this.dom.leaderboardModal.classList.remove('active');
           if (this.dom.pauseBanner) this.dom.pauseBanner.classList.remove('active');
+          if (this.dom.exitModal) this.dom.exitModal.classList.remove('active');
+        }
+
+        /* ----------------------------------------------------------------------
+           LEAVE GAME & MAIN MENU RETURN METHODS
+           ---------------------------------------------------------------------- */
+        returnToMenu() {
+          this.state = 'START';
+          this.score = 0;
+          this.firewallsPassed = 0;
+          this.firewallsSmashed = 0;
+          this.nodesCollected = 0;
+          this.hp = this.maxHp;
+          this.combo = 0;
+          this.shieldActive = false;
+          this.shieldTimer = 0;
+          this.invulnerableTimer = 0;
+          this.hasWon = false;
+          this.isEndlessMode = false;
+          this.screenShake = 0;
+          this.obstacles = [];
+          this.dataNodes = [];
+          if (this.particles) this.particles.particles = [];
+          if (this.floatingTexts) this.floatingTexts.texts = [];
+
+          const cfg = this.PACE_CONFIG[this.currentPace] || this.PACE_CONFIG.standard;
+          this.player.x = 180;
+          this.player.y = 260;
+          this.player.vy = 0;
+          this.player.angle = 0;
+          this.player.gravity = cfg.gravity;
+          this.player.jumpImpulse = cfg.jump;
+          this.player.maxFallSpeed = cfg.maxFall;
+
+          // Pre-generate initial runway of firewalls
+          this.lastObstacleX = this.V_WIDTH + 80;
+          for (let i = 0; i < 4; i++) {
+            this.spawnObstacle(this.lastObstacleX);
+            this.lastObstacleX += cfg.spacing;
+          }
+
+          // Update HUD
+          this.updateHUD();
+          if (this.dom.introHighScore) {
+            this.dom.introHighScore.textContent = this.highScore;
+          }
+
+          // Dismiss overlays & activate Start Modal
+          if (this.dom.gameoverModal) this.dom.gameoverModal.classList.remove('active');
+          if (this.dom.victoryModal) this.dom.victoryModal.classList.remove('active');
+          if (this.dom.leaderboardModal) this.dom.leaderboardModal.classList.remove('active');
+          if (this.dom.pauseBanner) this.dom.pauseBanner.classList.remove('active');
+          if (this.dom.exitModal) this.dom.exitModal.classList.remove('active');
+          if (this.dom.startModal) this.dom.startModal.classList.add('active');
+
+          this.showToast('RETURNED TO MAIN MENU');
+        }
+
+        quitGame() {
+          // Fill telemetry summary
+          if (this.dom.exitPilotName) this.dom.exitPilotName.textContent = this.pilotName || 'PILOT_01';
+          if (this.dom.exitFinalScore) this.dom.exitFinalScore.textContent = this.score;
+          if (this.dom.exitHighScore) this.dom.exitHighScore.textContent = this.highScore;
+
+          // Attempt browser window close
+          try {
+            window.close();
+          } catch (e) {}
+
+          // If browser policy prevents script-closing tab, show cybernetic disconnected modal
+          if (this.dom.gameoverModal) this.dom.gameoverModal.classList.remove('active');
+          if (this.dom.victoryModal) this.dom.victoryModal.classList.remove('active');
+          if (this.dom.leaderboardModal) this.dom.leaderboardModal.classList.remove('active');
+          if (this.dom.startModal) this.dom.startModal.classList.remove('active');
+          if (this.dom.pauseBanner) this.dom.pauseBanner.classList.remove('active');
+          if (this.dom.exitModal) this.dom.exitModal.classList.add('active');
+          this.state = 'START';
+          this.showToast('TRANSMISSION DISCONNECTED');
         }
 
         toggleAudio() {
