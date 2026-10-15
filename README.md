@@ -34,7 +34,7 @@ Take control of a high-frequency **Data Packet** infiltrating the root mainframe
 
 | <kbd>Space</kbd> / <kbd>↑</kbd> / <kbd>W</kbd> / **Left Click** | **Vertical Thrust** | Feather-light upward impulse with responsive, smooth tilting. |
 | <kbd>L</kbd> | **Squad Leaderboard** | Open the 35/65 Hall of Fame modal to view rankings, name your squad, and invite friends. |
-| <kbd>ESC</kbd> | **Boss Stealth Key** | Instantly hides the canvas and displays an authentic benign **Windows System Update** screen. Press <kbd>ESC</kbd> again to resume safely. |
+| <kbd>ESC</kbd> | **Boss Stealth Key** | Instantly hides the game behind an authentic corporate **Windows System Update** screen. Press <kbd>ESC</kbd> or click the sleek **[ ↩ Return to Game ]** button to exit safely. |
 | <kbd>M</kbd> | **Audio Toggle** | Toggle procedural Web Audio sound FX (muted by default for office safety). |
 
 ---
@@ -61,7 +61,7 @@ Take control of a high-frequency **Data Packet** infiltrating the root mainframe
 - **Visual FX & Screen Shake**: Luminescent particle trails, shattering firewall voxels, and a 22px screen shake when smashing through obstacles.
 - **Office Stealth Mode**:
   - **Mute by default**: Procedural synth audio powered by Web Audio API without external audio files.
-  - **Authentic Windows Update Boss Screen**: Realistic Segoe UI circular dot spinner and incrementing update percentage ticker.
+  - **Authentic Windows Update Boss Screen**: Realistic Segoe UI circular dot spinner and incrementing update percentage ticker that camouflages your gameplay, with an accessible **[ ↩ Return to Game ]** button or <kbd>ESC</kbd> shortcut.
 - **Zero Dependencies**: 100% self-contained in a single, lightweight HTML file.
 
 ---

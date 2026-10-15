@@ -901,13 +901,34 @@
       font-weight: 300;
     }
 
-    /* Small discreet stealth hint at bottom edge */
+    /* Discreet, accessible stealth hint / exit button at bottom edge */
     .boss-stealth-hint {
       position: absolute;
-      bottom: 12px;
-      font-size: 10px;
-      color: #222222;
-      letter-spacing: 0.5px;
+      bottom: 24px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 9px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      letter-spacing: 0.3px;
+      z-index: 1000000;
+    }
+
+    .boss-stealth-hint:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.45);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+    }
+
+    .boss-stealth-hint:active {
+      transform: translateY(1px);
     }
 
     /* Responsive fallbacks */
@@ -1003,9 +1024,9 @@
         </div>
       </div>
       <div style="display: flex; gap: 8px;">
-        <div class="hud-pill" id="btn-boss-info" title="Instantly hide game into corporate update">
+        <div class="hud-pill" id="btn-boss-info" title="Office Stealth: Camouflage game into a fake Windows Update screen (Press ESC or click button to exit)">
           <span class="key-badge">ESC</span>
-          <span>Boss Stealth Key</span>
+          <span>Boss Key (Camouflage)</span>
         </div>
         <div class="hud-pill" id="btn-audio-toggle">
           <span class="audio-indicator" id="audio-dot"></span>
@@ -1025,7 +1046,8 @@
             <div class="directive-box">
               🎯 <strong>Objective: Clear 20 Firewalls to WIN!</strong><br>
               🛡️ <strong>Integrity: 3 Lives</strong> (absorbs impacts)<br>
-              ⚡ <strong>3x Nodes:</strong> 5s Smash Shield + Repair
+              ⚡ <strong>3x Nodes:</strong> 5s Smash Shield + Repair<br>
+              💼 <strong>Boss Key (ESC):</strong> Fake Windows Update camouflage
             </div>
           </div>
 
@@ -1043,8 +1065,8 @@
               <span style="color: var(--neon-emerald); font-weight:700;">3 Lives</span>
             </div>
             <div class="guide-item">
-              <span>Escape</span>
-              <span>Boss Key</span>
+              <span>Escape (ESC)</span>
+              <span>Boss Key (Camouflage)</span>
             </div>
           </div>
         </div>
@@ -1117,8 +1139,8 @@
               <span>Restart Run</span>
             </div>
             <div class="guide-item">
-              <span>Escape</span>
-              <span>Boss Key</span>
+              <span>Escape (ESC)</span>
+              <span>Boss Key (Camouflage)</span>
             </div>
             <div class="guide-item">
               <span>M</span>
@@ -1192,6 +1214,10 @@
             <div class="guide-item">
               <span>Security Clearance</span>
               <span>UNRESTRICTED</span>
+            </div>
+            <div class="guide-item">
+              <span>Escape (ESC)</span>
+              <span>Boss Key (Camouflage)</span>
             </div>
           </div>
         </div>
@@ -1339,7 +1365,9 @@
     <div class="boss-primary-text">Working on updates <span id="boss-pct">27</span>% complete.</div>
     <div class="boss-secondary-text">Don't turn off your PC. This will take a while.</div>
     <div class="boss-tertiary-text">Your device will restart several times.</div>
-    <div class="boss-stealth-hint">Press ESC to return</div>
+    <div class="boss-stealth-hint" id="boss-exit-btn" title="Exit Boss Camouflage & Return to Game">
+      ↩ Click or Press <kbd style="background:rgba(255,255,255,0.22); padding:2px 7px; border-radius:4px; font-family:inherit; font-weight:700;">ESC</kbd> to Return to Game
+    </div>
   </div>
 
   <!-- ========================================================================
@@ -1867,6 +1895,7 @@
             audioLabel: document.getElementById('audio-label'),
             btnBossInfo: document.getElementById('btn-boss-info'),
             bossScreen: document.getElementById('boss-screen'),
+            bossExitBtn: document.getElementById('boss-exit-btn'),
             bossPct: document.getElementById('boss-pct'),
             startModal: document.getElementById('start-modal'),
             gameoverModal: document.getElementById('gameover-modal'),
@@ -2119,7 +2148,18 @@
             });
           }
 
-          // Clicking fake update screen does not reveal the game (stays stealthy)
+          // Return to game when clicking/tapping the exit button on the Boss Screen
+          if (this.dom.bossExitBtn) {
+            ['click', 'touchstart'].forEach((evt) => {
+              this.dom.bossExitBtn.addEventListener(evt, (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                this.toggleBossKey();
+              }, { passive: false });
+            });
+          }
+
+          // Clicking elsewhere on fake update screen does not reveal the game (stays stealthy)
           this.dom.bossScreen.addEventListener('click', (e) => {
             e.stopPropagation();
           });
