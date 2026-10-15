@@ -876,7 +876,8 @@
             <div class="directive-box">
               🎯 <strong>Objective: Endless Cyber Run — survive as deep as you can!</strong><br>
               🛡️ <strong>Integrity: 3 Lives</strong> (absorbs impacts)<br>
-              ⚡ <strong>Rare Powerup Nodes:</strong> Collect 3 to trigger 5s Smash Shield + Repair<br>
+              ⚡ <strong>Rare Powerup Nodes:</strong> Collect 3 for 5s Smash Shield + Repair<br>
+              👑 <strong>Super Rare Phantom Core:</strong> Cloaked anomaly phasing in & out of sight! Grants +250 PTS, Full Repair & 8s Hyper Shield<br>
               ⚙️ <strong>Pause & Settings (ESC):</strong> Pause run, adjust pace & audio mid-game
             </div>
           </div>
@@ -889,6 +890,10 @@
             <div class="guide-item">
               <span>Flight Gauntlet</span>
               <span style="color: var(--neon-cyan); font-weight:700;">Endless Run</span>
+            </div>
+            <div class="guide-item">
+              <span>Super Rare Core</span>
+              <span style="color: #ffd700; font-weight:700;">Phasing Cloak 🌟</span>
             </div>
             <div class="guide-item">
               <span>Integrity Buffer</span>
@@ -911,7 +916,7 @@
             <div class="hero-tagline">Protocol 0x4F // Cyber Flyer</div>
             <h1>DATA // <span>PACKET</span></h1>
             <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 8px;">
-              Pilot deep into the infinite cyber mainframe. Dodge dynamic firewalls, grab rare powerup nodes, and set the ultimate high score.
+              Pilot deep into the infinite cyber mainframe. Dodge dynamic firewalls, grab rare powerup nodes, spot elusive phantom cores, and set the ultimate high score.
             </p>
           </div>
 
@@ -940,7 +945,10 @@
           <div style="display: flex; gap: 8px; margin: 12px 0 10px 0; align-items: flex-end;">
             <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
               <span class="pace-title" style="font-size: 9px;">PILOT CALL SIGN</span>
-              <input type="text" id="start-callsign-input" class="cyber-input" style="padding: 7px 10px; font-size: 11px;" maxlength="14" placeholder="PILOT_01">
+              <div style="display: flex; gap: 6px;">
+                <input type="text" id="start-callsign-input" class="cyber-input" style="flex: 1; padding: 7px 10px; font-size: 11px;" maxlength="14" placeholder="PILOT_01">
+                <button type="button" id="btn-roll-start-callsign" class="pace-btn" style="padding: 7px 10px; height: 35px;" title="Roll random cyber call sign">🎲</button>
+              </div>
             </div>
             <button type="button" id="btn-start-leaderboard" class="pace-btn" style="flex: none; padding: 7px 12px; display: flex; align-items: center; gap: 5px; height: 35px;">
               <span>🏆</span> <span>LEADERBOARD</span>
@@ -1006,6 +1014,10 @@
             <div class="matrix-tile">
               <span class="metric-name">Nodes Harvested</span>
               <span id="final-nodes" class="metric-val" style="color: var(--neon-emerald);">0</span>
+            </div>
+            <div class="matrix-tile">
+              <span class="metric-name">Super Rare Cores</span>
+              <span id="final-superrare" class="metric-val" style="color: #ffd700;">0</span>
             </div>
             <div class="matrix-tile">
               <span class="metric-name">Firewalls Smashed</span>
@@ -1131,7 +1143,10 @@
             <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
               <div>
                 <span class="pace-title" style="display:block; margin-bottom: 4px; font-size: 9px;">YOUR CALL SIGN</span>
-                <input type="text" id="lb-input-callsign" class="cyber-input" maxlength="14" placeholder="PILOT_01">
+                <div style="display: flex; gap: 6px;">
+                  <input type="text" id="lb-input-callsign" class="cyber-input" style="flex: 1;" maxlength="14" placeholder="PILOT_01">
+                  <button type="button" id="btn-roll-lb-callsign" class="pace-btn" style="padding: 7px 10px; height: 35px;" title="Roll random cyber call sign">🎲</button>
+                </div>
               </div>
               <div>
                 <span class="pace-title" style="display:block; margin-bottom: 4px; font-size: 9px;">SQUAD / LEADERBOARD NAME</span>
@@ -1224,6 +1239,10 @@
                 <span>Nodes Harvested</span>
                 <span id="pause-stat-nodes" style="color: var(--neon-emerald); font-weight:700;">0</span>
               </div>
+              <div class="guide-item">
+                <span>Super Rare Cores</span>
+                <span id="pause-stat-superrare" style="color: #ffd700; font-weight:700;">0</span>
+              </div>
             </div>
           </div>
 
@@ -1278,7 +1297,10 @@
             <!-- Pilot Call Sign Card -->
             <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;">
               <span class="pace-title" style="font-size: 9px; margin-bottom: 6px;">PILOT CALL SIGN</span>
-              <input type="text" id="pause-callsign-input" class="cyber-input" style="padding: 7px 10px; font-size: 11px;" maxlength="14" placeholder="PILOT_01">
+              <div style="display: flex; gap: 6px;">
+                <input type="text" id="pause-callsign-input" class="cyber-input" style="flex: 1; padding: 7px 10px; font-size: 11px;" maxlength="14" placeholder="PILOT_01">
+                <button type="button" id="btn-roll-pause-callsign" class="pace-btn" style="padding: 7px 9px; height: 35px;" title="Roll random cyber call sign">🎲</button>
+              </div>
             </div>
           </div>
 
@@ -1445,6 +1467,25 @@
 
             osc.start(now);
             osc.stop(now + 0.4);
+          } catch (e) {}
+        }
+
+        playSuperRare() {
+          if (this.muted || !this.ctx) return;
+          try {
+            const now = this.ctx.currentTime;
+            [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((freq, i) => {
+              const osc = this.ctx.createOscillator();
+              const gain = this.ctx.createGain();
+              osc.type = 'sine';
+              osc.frequency.setValueAtTime(freq, now + i * 0.05);
+              gain.gain.setValueAtTime(0.14, now + i * 0.05);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.05 + 0.32);
+              osc.connect(gain);
+              gain.connect(this.ctx.destination);
+              osc.start(now + i * 0.05);
+              osc.stop(now + i * 0.05 + 0.35);
+            });
           } catch (e) {}
         }
 
@@ -1633,6 +1674,19 @@
           }
         }
 
+        // Super Rare Quantum Core collect explosion
+        emitSuperRare(x, y) {
+          for (let i = 0; i < 32; i++) {
+            const angle = (Math.PI * 2 / 32) * i + (Math.random() * 0.2);
+            const speed = Math.random() * 5.0 + 2.0;
+            const vx = Math.cos(angle) * speed;
+            const vy = Math.sin(angle) * speed;
+            const colors = ['rgba(255, 215, 0, ', 'rgba(0, 243, 255, ', 'rgba(255, 0, 128, '];
+            const col = colors[Math.floor(Math.random() * colors.length)];
+            this.spawn(x, y, vx, vy, col, Math.random() * 4 + 2, 45, 'diamond', 0.04);
+          }
+        }
+
         // Violent firewall shatter explosion
         emitShatter(x, y, width, height) {
           const count = 48;
@@ -1777,6 +1831,7 @@
           this.firewallsPassed = 0;
           this.firewallsSmashed = 0;
           this.nodesCollected = 0;
+          this.superRareCollected = 0;
 
           // Integrity (3 Lives instead of 1-hit death!) & Endless Mode
           this.maxHp = 3;
@@ -1816,10 +1871,11 @@
             maxFallSpeed: initialCfg.maxFall
           };
 
-          // Combo & Shield Mechanics (Just 3 nodes for quick shield, 5.0s duration!)
+          // Combo & Shield Mechanics (3 nodes = 5.0s shield; Super Rare = 8.0s Hyper Overdrive!)
           this.combo = 0;
           this.MAX_COMBO = 3;
           this.shieldActive = false;
+          this.isHyperShield = false;
           this.shieldDuration = 300; // 5.0 seconds at 60fps
           this.shieldTimer = 0;
 
@@ -1875,6 +1931,7 @@
             pauseStatHp: document.getElementById('pause-stat-hp'),
             pauseStatWalls: document.getElementById('pause-stat-walls'),
             pauseStatNodes: document.getElementById('pause-stat-nodes'),
+            pauseStatSuperRare: document.getElementById('pause-stat-superrare'),
             startModal: document.getElementById('start-modal'),
             gameoverModal: document.getElementById('gameover-modal'),
             victoryModal: document.getElementById('victory-modal'),
@@ -1890,14 +1947,18 @@
             finalScore: document.getElementById('final-score'),
             finalHighScore: document.getElementById('final-highscore'),
             finalNodes: document.getElementById('final-nodes'),
+            finalSuperRare: document.getElementById('final-superrare'),
             finalSmashed: document.getElementById('final-smashed'),
             startCallsignInput: document.getElementById('start-callsign-input'),
+            btnRollStartCallsign: document.getElementById('btn-roll-start-callsign'),
             btnStartLeaderboard: document.getElementById('btn-start-leaderboard'),
             btnHudLeaderboard: document.getElementById('btn-hud-leaderboard'),
             btnGameoverLeaderboard: document.getElementById('btn-gameover-leaderboard'),
             btnVictoryLeaderboard: document.getElementById('btn-victory-leaderboard'),
             leaderboardModal: document.getElementById('leaderboard-modal'),
             lbInputCallsign: document.getElementById('lb-input-callsign'),
+            btnRollLbCallsign: document.getElementById('btn-roll-lb-callsign'),
+            btnRollPauseCallsign: document.getElementById('btn-roll-pause-callsign'),
             lbInputSquadname: document.getElementById('lb-input-squadname'),
             btnShareInvite: document.getElementById('btn-share-invite'),
             btnCopyCode: document.getElementById('btn-copy-code'),
@@ -1921,7 +1982,15 @@
           };
 
           // Pilot Profile & Squad Leaderboard Data
-          this.pilotName = (localStorage.getItem('packet_pilot_name') || 'PILOT_01').toUpperCase();
+          // Generate a cool random call sign every time player visits unless they explicitly customized their name
+          const hasCustomPilot = localStorage.getItem('packet_pilot_custom') === 'true';
+          const savedPilot = (localStorage.getItem('packet_pilot_name') || '').trim().toUpperCase();
+          if (hasCustomPilot && savedPilot && savedPilot !== 'PILOT_01') {
+            this.pilotName = savedPilot;
+          } else {
+            this.pilotName = this.generateRandomPilotName();
+            try { localStorage.setItem('packet_pilot_name', this.pilotName); } catch (e) {}
+          }
           this.squadName = (localStorage.getItem('packet_squad_name') || 'CYBER_SQUAD').toUpperCase();
           this.currentLbTab = 'squad';
           this.squadScores = this.loadSquadScores();
@@ -2196,6 +2265,26 @@
             });
           }
 
+          // Random Call Sign Roll Buttons
+          if (this.dom.btnRollStartCallsign) {
+            this.dom.btnRollStartCallsign.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.rollNewRandomCallsign(true);
+            });
+          }
+          if (this.dom.btnRollLbCallsign) {
+            this.dom.btnRollLbCallsign.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.rollNewRandomCallsign(true);
+            });
+          }
+          if (this.dom.btnRollPauseCallsign) {
+            this.dom.btnRollPauseCallsign.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.rollNewRandomCallsign(true);
+            });
+          }
+
           // Share & Squad Code Actions
           if (this.dom.btnShareInvite) {
             this.dom.btnShareInvite.addEventListener('click', (e) => {
@@ -2366,10 +2455,60 @@
           this.sound.playCollect(880);
         }
 
-        updatePilotName(name) {
-          const clean = (name || 'PILOT_01').trim().substring(0, 14).toUpperCase();
-          this.pilotName = clean || 'PILOT_01';
-          try { localStorage.setItem('packet_pilot_name', this.pilotName); } catch (e) {}
+        generateRandomPilotName() {
+          // 5% chance for a SUPER RARE legendary call sign!
+          if (Math.random() < 0.05) {
+            const rareTitles = [
+              '👑 CIPHER_GOD',
+              '⚡ CHOSEN_ONE',
+              '💎 ROOT_PRIME',
+              '🌟 GHOST_ARCHON',
+              '🔥 ZERO_LORD',
+              '🛡️ APEX_TITAN',
+              '🔮 MATRIX_NEO',
+              '🚀 HYPER_DRAKE'
+            ];
+            return rareTitles[Math.floor(Math.random() * rareTitles.length)];
+          }
+
+          const prefixes = [
+            'CYBER', 'NEO', 'GHOST', 'CIPHER', 'BYTE', 'PIXEL', 'GLITCH', 'VORTEX',
+            'NEXUS', 'SHADOW', 'SYNTAX', 'QUANTUM', 'VECTOR', 'CIRCUIT', 'KINETIC',
+            'HYPER', 'STEALTH', 'TURBO', 'PULSE', 'ZERO', 'ECHO', 'CHRONO', 'SONIC'
+          ];
+          const suffixes = [
+            'RUNNER', 'PILOT', 'FOX', 'SHARK', 'VIPER', 'HAWK', 'RAIDER', 'HACKER',
+            'DRIFTER', 'SURFER', 'RAY', 'BLADE', 'SPARK', 'DRAKE', 'DASH', 'SCOUT',
+            'WOLF', 'TITAN', 'BOT', 'WARP', 'STORM', 'KNIGHT', 'SPECTRE'
+          ];
+          const p = prefixes[Math.floor(Math.random() * prefixes.length)];
+          const s = suffixes[Math.floor(Math.random() * suffixes.length)];
+          const num = Math.floor(Math.random() * 90 + 10);
+          return `${p}_${s.substring(0, 4)}${num}`.substring(0, 14);
+        }
+
+        rollNewRandomCallsign(showFeedback = true) {
+          const newName = this.generateRandomPilotName();
+          this.updatePilotName(newName, false);
+          if (showFeedback) {
+            this.sound.playCollect(920);
+            if (newName.includes('👑') || newName.includes('⚡') || newName.includes('💎') || newName.includes('🌟') || newName.includes('🔥')) {
+              this.showToast(`🌟 SUPER RARE CALLSIGN: ${newName}!`);
+            } else {
+              this.showToast(`🎲 CALLSIGN: ${newName}`);
+            }
+          }
+        }
+
+        updatePilotName(name, isManualEdit = true) {
+          const clean = (name || '').trim().substring(0, 14).toUpperCase();
+          this.pilotName = clean || this.generateRandomPilotName();
+          try {
+            localStorage.setItem('packet_pilot_name', this.pilotName);
+            if (isManualEdit) {
+              localStorage.setItem('packet_pilot_custom', 'true');
+            }
+          } catch (e) {}
           if (this.dom.startCallsignInput && this.dom.startCallsignInput.value !== this.pilotName) {
             this.dom.startCallsignInput.value = this.pilotName;
           }
@@ -2637,6 +2776,7 @@
           this.firewallsPassed = 0;
           this.firewallsSmashed = 0;
           this.nodesCollected = 0;
+          this.superRareCollected = 0;
 
           // State & Lives Reset
           this.hp = this.maxHp;
@@ -2654,6 +2794,7 @@
 
           this.combo = 0;
           this.shieldActive = false;
+          this.isHyperShield = false;
           this.shieldTimer = 0;
 
           this.player.x = 180;
@@ -2693,9 +2834,11 @@
           this.firewallsPassed = 0;
           this.firewallsSmashed = 0;
           this.nodesCollected = 0;
+          this.superRareCollected = 0;
           this.hp = this.maxHp;
           this.combo = 0;
           this.shieldActive = false;
+          this.isHyperShield = false;
           this.shieldTimer = 0;
           this.invulnerableTimer = 0;
           this.hasWon = false;
@@ -2782,6 +2925,7 @@
           if (this.dom.pauseStatHp) this.dom.pauseStatHp.textContent = `${this.hp} / ${this.maxHp}`;
           if (this.dom.pauseStatWalls) this.dom.pauseStatWalls.textContent = `${this.firewallsPassed}`;
           if (this.dom.pauseStatNodes) this.dom.pauseStatNodes.textContent = this.nodesCollected;
+          if (this.dom.pauseStatSuperRare) this.dom.pauseStatSuperRare.textContent = this.superRareCollected;
 
           // Sync pace selector buttons in pause modal
           if (this.dom.pausePaceButtons) {
@@ -2877,8 +3021,23 @@
 
           this.obstacles.push(obstacle);
 
-          // Spawn a Data Node rarely (~18% chance, roughly 1 in ~5 to 6 firewalls)
-          if (Math.random() < 0.18) {
+          // Spawn Super Rare Quantum Phantom Core (~3.5% chance)
+          // It phases and cloaks in and out of invisibility ("you can see sometimes and sometimes cannot")
+          const spawnSuperRare = Math.random() < 0.035;
+          if (spawnSuperRare) {
+            this.dataNodes.push({
+              x: x + colWidth / 2,
+              y: gapY + gap / 2,
+              baseY: gapY + gap / 2,
+              radius: 12,
+              collected: false,
+              bobOffset: Math.random() * Math.PI * 2,
+              isSuperRare: true,
+              phaseOffset: Math.random() * Math.PI * 2
+            });
+            this.showToast('⚡ QUANTUM ANOMALY DETECTED // PHASING SIGNAL IN SECTOR');
+          } else if (Math.random() < 0.18) {
+            // Standard Rare Data Node (~18% chance)
             const inGap = Math.random() > 0.35;
             const nodeX = inGap ? x + colWidth / 2 : x + colWidth + (this.obstacleSpacing - colWidth) / 2;
             const nodeY = inGap ? gapY + gap / 2 : Math.max(90, Math.min(this.V_HEIGHT - 90, gapY + gap / 2 + (Math.random() - 0.5) * 50));
@@ -2889,7 +3048,8 @@
               baseY: nodeY,
               radius: 9,
               collected: false,
-              bobOffset: Math.random() * Math.PI * 2
+              bobOffset: Math.random() * Math.PI * 2,
+              isSuperRare: false
             });
           }
         }
@@ -3036,7 +3196,11 @@
             // Player Node Pickup Detection
             if (!node.collected && dist < this.player.hitboxRadius + node.radius + 10) {
               node.collected = true;
-              this.collectDataNode(node);
+              if (node.isSuperRare) {
+                this.collectSuperRareNode(node);
+              } else {
+                this.collectDataNode(node);
+              }
               this.dataNodes.splice(i, 1);
               continue;
             }
@@ -3084,7 +3248,7 @@
           if (!this.shieldActive) {
             this.combo++;
             if (this.combo >= this.MAX_COMBO) {
-              this.activateShield();
+              this.activateShield(false);
               // Integrity repair bonus!
               if (this.hp < this.maxHp) {
                 this.hp++;
@@ -3095,17 +3259,42 @@
           this.updateHUD();
         }
 
-        activateShield() {
+        collectSuperRareNode(node) {
+          this.superRareCollected++;
+          this.score += 250;
+          this.sound.playSuperRare();
+          this.particles.emitSuperRare(node.x, node.y);
+          this.floatingTexts.add('👑 +250 SUPER RARE CORE!', node.x, node.y - 15, '#ffd700');
+
+          // Full integrity restoration!
+          this.hp = this.maxHp;
+          this.floatingTexts.add('🛡️ FULL INTEGRITY RESTORED!', this.player.x, this.player.y - 45, '#00ffaa');
+
+          // Activate 8-second Golden Hyper Shield!
+          this.activateShield(true);
+          this.updateHUD();
+        }
+
+        activateShield(isHyper = false) {
           this.shieldActive = true;
+          this.isHyperShield = isHyper;
+          this.shieldDuration = isHyper ? 480 : 300; // 8.0s for hyper, 5.0s for standard
           this.shieldTimer = this.shieldDuration;
-          this.sound.playShieldCharge();
-          this.floatingTexts.add('5s BREAKER SHIELD!', this.player.x, this.player.y - 30, '#b545ff');
-          this.showToast('BREAKER SHIELD ACTIVE // SMASH READY');
+          if (isHyper) {
+            this.sound.playSuperRare();
+            this.floatingTexts.add('⚡ 8s HYPER OVERDRIVE!', this.player.x, this.player.y - 30, '#ffd700');
+            this.showToast('🌟 QUANTUM OVERDRIVE ACTIVE // HYPER SMASH READY');
+          } else {
+            this.sound.playShieldCharge();
+            this.floatingTexts.add('5s BREAKER SHIELD!', this.player.x, this.player.y - 30, '#b545ff');
+            this.showToast('BREAKER SHIELD ACTIVE // SMASH READY');
+          }
           this.updateHUD();
         }
 
         deactivateShield(smashedWall = false) {
           this.shieldActive = false;
+          this.isHyperShield = false;
           this.combo = 0;
           this.shieldTimer = 0;
           this.dom.shieldTimerBar.style.width = '0%';
@@ -3115,7 +3304,8 @@
         smashFirewall(obs) {
           obs.smashed = true;
           this.firewallsSmashed++;
-          this.score += 100;
+          const smashBonus = this.isHyperShield ? 150 : 100;
+          this.score += smashBonus;
 
           // Satisfying Heavy Screen Shake
           this.screenShake = 22;
@@ -3128,7 +3318,8 @@
           this.particles.emitShatter(obs.x, obs.gapY + obs.gapHeight, obs.width, this.V_HEIGHT - (obs.gapY + obs.gapHeight));
 
           // Canvas floating label
-          this.floatingTexts.add('+100 WALL SMASHED!', obs.x + obs.width / 2, this.player.y, '#ff2a5f');
+          const labelColor = this.isHyperShield ? '#ffd700' : '#ff2a5f';
+          this.floatingTexts.add(`+${smashBonus} WALL SMASHED!`, obs.x + obs.width / 2, this.player.y, labelColor);
 
           // Consume shield immediately on smash
           this.deactivateShield(true);
@@ -3226,6 +3417,7 @@
           this.dom.finalScore.textContent = this.score;
           this.dom.finalHighScore.textContent = this.highScore;
           this.dom.finalNodes.textContent = this.nodesCollected;
+          if (this.dom.finalSuperRare) this.dom.finalSuperRare.textContent = this.superRareCollected;
           this.dom.finalSmashed.textContent = this.firewallsSmashed;
 
           // Record run to Squad Leaderboard
@@ -3273,11 +3465,28 @@
 
           // Combo Status Label
           if (this.shieldActive) {
-            this.dom.comboStatus.textContent = 'SHIELD CHARGED';
-            this.dom.comboStatus.className = 'combo-status-text shield-active';
+            if (this.isHyperShield) {
+              this.dom.comboStatus.textContent = '🌟 HYPER OVERDRIVE';
+              this.dom.comboStatus.className = 'combo-status-text shield-active';
+              if (this.dom.shieldTimerBar) {
+                this.dom.shieldTimerBar.style.background = 'linear-gradient(90deg, #ffd700, #ff007f)';
+                this.dom.shieldTimerBar.style.boxShadow = '0 0 10px #ffd700';
+              }
+            } else {
+              this.dom.comboStatus.textContent = 'SHIELD CHARGED';
+              this.dom.comboStatus.className = 'combo-status-text shield-active';
+              if (this.dom.shieldTimerBar) {
+                this.dom.shieldTimerBar.style.background = 'linear-gradient(90deg, var(--neon-purple), var(--neon-cyan))';
+                this.dom.shieldTimerBar.style.boxShadow = '0 0 8px var(--neon-purple)';
+              }
+            }
           } else {
             this.dom.comboStatus.textContent = `${this.combo} / ${this.MAX_COMBO} RARE NODES`;
             this.dom.comboStatus.className = 'combo-status-text';
+            if (this.dom.shieldTimerBar) {
+              this.dom.shieldTimerBar.style.background = 'linear-gradient(90deg, var(--neon-purple), var(--neon-cyan))';
+              this.dom.shieldTimerBar.style.boxShadow = '0 0 8px var(--neon-purple)';
+            }
           }
         }
 
@@ -3460,6 +3669,73 @@
             this.ctx.save();
             this.ctx.translate(node.x, node.y);
 
+            if (node.isSuperRare) {
+              // Phasing cloaking stealth oscillation ("that u can see sometimes and sometimes cannot")
+              // Cycle between full radiant visibility and complete cloaking!
+              const phase = Math.sin(time * 3.2 + (node.phaseOffset || 0));
+              const alpha = Math.max(0, Math.min(1, (phase + 0.25) / 1.25));
+
+              // If cloaked, completely transparent (cannot be seen!)
+              if (alpha < 0.08) {
+                if (Math.random() < 0.06) {
+                  this.ctx.fillStyle = 'rgba(255, 215, 0, 0.4)';
+                  this.ctx.fillRect((Math.random() - 0.5) * 12, (Math.random() - 0.5) * 12, 2, 2);
+                }
+                this.ctx.restore();
+                continue;
+              }
+
+              this.ctx.globalAlpha = alpha;
+
+              // Dual counter-rotating golden & rainbow quantum energy rings
+              this.ctx.save();
+              this.ctx.rotate(time * 3);
+              this.ctx.strokeStyle = '#ffd700';
+              this.ctx.lineWidth = 2.0;
+              this.ctx.setLineDash([5, 4]);
+              this.ctx.beginPath();
+              this.ctx.ellipse(0, 0, 20, 10, time, 0, Math.PI * 2);
+              this.ctx.stroke();
+              this.ctx.restore();
+
+              this.ctx.save();
+              this.ctx.rotate(-time * 2.5);
+              this.ctx.strokeStyle = '#ff007f';
+              this.ctx.lineWidth = 1.5;
+              this.ctx.setLineDash([3, 5]);
+              this.ctx.beginPath();
+              this.ctx.ellipse(0, 0, 12, 18, -time, 0, Math.PI * 2);
+              this.ctx.stroke();
+              this.ctx.restore();
+
+              // Radiant Golden Core Crystal
+              this.ctx.shadowColor = '#ffd700';
+              this.ctx.shadowBlur = 24;
+              this.ctx.fillStyle = '#ffd700';
+
+              this.ctx.beginPath();
+              this.ctx.moveTo(0, -node.radius);
+              this.ctx.lineTo(node.radius, 0);
+              this.ctx.lineTo(0, node.radius);
+              this.ctx.lineTo(-node.radius, 0);
+              this.ctx.closePath();
+              this.ctx.fill();
+
+              // Inner Prismatic Core
+              this.ctx.fillStyle = '#ffffff';
+              this.ctx.beginPath();
+              this.ctx.moveTo(0, -node.radius * 0.5);
+              this.ctx.lineTo(node.radius * 0.5, 0);
+              this.ctx.lineTo(0, node.radius * 0.5);
+              this.ctx.lineTo(-node.radius * 0.5, 0);
+              this.ctx.closePath();
+              this.ctx.fill();
+
+              this.ctx.restore();
+              continue;
+            }
+
+            // Standard Rare Data Node
             // Orbiting cyber energy ring
             this.ctx.save();
             this.ctx.rotate(time * 2);
@@ -3515,10 +3791,12 @@
             const shieldRadius = p.radius + 14 + shieldPulse;
 
             this.ctx.save();
-            this.ctx.strokeStyle = '#b545ff';
-            this.ctx.shadowColor = '#b545ff';
-            this.ctx.shadowBlur = 20;
-            this.ctx.lineWidth = 2.5;
+            const shieldColor = this.isHyperShield ? '#ffd700' : '#b545ff';
+            const shieldAura = this.isHyperShield ? 'rgba(255, 215, 0, 0.22)' : 'rgba(181, 69, 255, 0.15)';
+            this.ctx.strokeStyle = shieldColor;
+            this.ctx.shadowColor = shieldColor;
+            this.ctx.shadowBlur = this.isHyperShield ? 26 : 20;
+            this.ctx.lineWidth = this.isHyperShield ? 3.0 : 2.5;
 
             // Hexagonal Shield Boundary
             this.ctx.beginPath();
@@ -3533,15 +3811,16 @@
             this.ctx.stroke();
 
             // Inner glowing translucent aura
-            this.ctx.fillStyle = 'rgba(181, 69, 255, 0.15)';
+            this.ctx.fillStyle = shieldAura;
             this.ctx.fill();
             this.ctx.restore();
           }
 
           // Outer Glow Rhombus (Data Packet Shape)
-          this.ctx.shadowColor = this.shieldActive ? '#b545ff' : '#00f3ff';
+          const packetColor = this.shieldActive ? (this.isHyperShield ? '#ffd700' : '#b545ff') : '#00f3ff';
+          this.ctx.shadowColor = packetColor;
           this.ctx.shadowBlur = 18;
-          this.ctx.fillStyle = this.shieldActive ? '#b545ff' : '#00f3ff';
+          this.ctx.fillStyle = packetColor;
 
           this.ctx.beginPath();
           this.ctx.moveTo(p.radius * 1.5, 0);          // Front tip

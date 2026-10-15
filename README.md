@@ -18,9 +18,10 @@
 Take control of a high-frequency **Data Packet** infiltrating the root mainframe in cyberspace.
 
 - **Endless Cyber Gauntlet**: Fly continuously through the infinite cyber mainframe without arbitrary stop limits. Track your lifetime best and firewalls cleared in real time!
+- **Dynamic Random Call Signs & Reroll (🎲)**: Generates a fresh, randomized cyberpunk call sign whenever players enter without typing one (e.g. `CYBER_FOX82`, `CIPHER_42`, `NEO_SHARK14`) with a 5% chance of rolling **Super Rare Legendary Titles** (`👑 CIPHER_GOD`, `⚡ CHOSEN_ONE`, `💎 ROOT_PRIME`, `🌟 GHOST_ARCHON`, `🔥 ZERO_LORD`). Use the `🎲` button on any menu to re-roll anytime!
 - **3-Life Data Integrity System**: No unfair instant deaths! The packet has 3 Integrity points. Hitting an obstacle deducts 1 integrity and grants a generous ~1.4-second invulnerability grace flicker.
-- **Rare Magnetic Data Nodes**: Glowing green Data Nodes now spawn rarely (~18% chance, ~1 in 5 firewalls), rewarding skilled navigation. Proximity magnetism draws them to your packet when within 90px.
-- **High-Value Repair & Breaker Shield**: Each rare node awards +50 points. Harvesting 3 Data Nodes restores +1 Integrity life and charges a **5.0-second Breaker Shield** allowing you to smash straight through firewalls!
+- **Rare Magnetic Data Nodes**: Glowing green Data Nodes spawn rarely (~18% chance, ~1 in 5 firewalls). Proximity magnetism draws them to your packet within 90px. Collecting 3 restores +1 HP and activates a **5.0-second Breaker Shield**.
+- **👑 Super Rare Quantum Phantom Core**: An elusive, cloaked anomaly spawning with a ~3.5% chance (~1 in ~28 firewalls) heralded by a sector alert. Features a **Phasing Stealth Cloak** that shimmers in and out of invisibility ("you can see sometimes and sometimes cannot")! Harvesting it awards **+250 PTS**, **Full HP Repair (3/3)**, and **8.0s Golden Hyper Overdrive Shield** (+150 pts per firewall smashed).
 - **Feather-Light Thrust**: Press <kbd>Space</kbd>, <kbd>↑</kbd>, <kbd>W</kbd>, <kbd>J</kbd>, or **Click / Tap** to give the packet an effortless, nimble upward lift against gentle gravity.
 - **Selectable Pacing / Difficulty**: Choose between **Relaxed (0.8x)**, **Standard (1.0x)**, and **Overclock (1.3x)** to match your preferred flow.
 - **Dynamic Phase Escalation (Harder at 10+)**: 
@@ -37,12 +38,13 @@ Take control of a high-frequency **Data Packet** infiltrating the root mainframe
 | <kbd>L</kbd> | **Squad Leaderboard** | Open the 35/65 Hall of Fame modal to view rankings, name your squad, and invite friends. |
 | <kbd>Q</kbd> | **Leave Run / Main Menu** | Return to the Title screen when dead or paused, or click **Leave Game** to exit session. |
 | <kbd>M</kbd> | **Audio Toggle** | Toggle procedural Web Audio sound FX (muted by default for office safety). |
+| <kbd>🎲</kbd> | **Random Call Sign** | Roll a fresh random cyberpunk call sign or hunt for a legendary title. |
 
 ---
 
 ## 🏆 Squad Leaderboards & Friend Invites
 
-- **Custom Call Signs**: Name your agent pilot (e.g. `MARK_01`, `ALEX`, `GHOST`) directly from the start screen or leaderboard hub.
+- **Custom & Randomized Call Signs**: Players automatically receive unique random call signs on entry, or can type their own or click `🎲` to reroll.
 - **Custom Squad / Leaderboard Names**: Name your squad leaderboard (e.g. `CYBER_SQUAD`, `TITAN_CREW`).
 - **🔗 1-Click Friend Invite Link**: Click **Invite Friend Link** to copy a smart URL containing your squad and top scores. When friends open the link, they automatically join your named squad board!
 - **📋 Squad Codes**: Copy and import portable squad codes across browsers and group chats (Discord, WhatsApp, Telegram).
@@ -53,12 +55,14 @@ Take control of a high-frequency **Data Packet** infiltrating the root mainframe
 ## ✨ Features
 
 - **Pure Endless Gauntlet**: Seamless endless flight where your distance and score scale indefinitely with deep-core speed milestones at 10 and 20+ firewalls.
+- **👑 Super Rare Phasing Phantom Cores**: Elusive cloaking quantum cores that alternate between full radiant visibility and stealth cloaking, granting +250 PTS, full HP repair, and golden Hyper Overdrive!
+- **🎲 Dynamic Call Sign Generator**: Guarantees distinct, vibrant player names across squad leaderboards even if players skip entering a name.
 - **3-Life Data Integrity System**: High tolerance gameplay with 3 HP and visual glitch/flicker grace periods, preventing frustrating one-hit game overs.
 - **Rare Powerup Nodes & Breaker Shield**: Strategic powerups appearing ~1 in 5 firewalls that reward players with +50 points, +1 HP repair, and high-impact firewall smashing.
 - **Tuned, Balanced Physics**: Accessible learning curve with wider firewall gates (215px+), spacious obstacle spacing (410px+), and forgiving near-miss hitboxes (5.5px).
 - **Full In-Game Pause & Settings Menu (<kbd>ESC</kbd>)**:
   - **Mid-Flight Pacing Control**: Switch between Relaxed (0.8x), Standard (1.0x), and Overclock (1.3x) on the fly during a run.
-  - **Audio & Profile Controls**: Toggle procedural Web Audio sound FX and edit Pilot Call Sign anytime.
+  - **Audio & Profile Controls**: Toggle procedural Web Audio sound FX and edit or reroll Pilot Call Sign anytime.
   - **Quick Run Restarts & Clean Exits**: One-click restart, squad leaderboard check, or return to the main menu.
 - **35/65 Split Grid Menus**: Modern split-card start, pause, leaderboard, and game-over modals displaying live telemetry, controls, and run statistics.
 - **Translucent Frosted Glass HUD**: Sleek floating cards powered by `backdrop-filter: blur(16px)` housing scores, Integrity health pips, real-time firewalls cleared counter, clock speed, and segmented combo meters.
