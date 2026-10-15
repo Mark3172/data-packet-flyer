@@ -17,16 +17,16 @@
 
 Take control of a high-frequency **Data Packet** infiltrating the root mainframe in cyberspace.
 
-- **Winnable 20-Firewall Mission**: Reach and breach the Mainframe by successfully clearing 20 firewalls to trigger a **VICTORY SCREEN**! Players can celebrate victory or continue into Endless Mode for high scores.
+- **Endless Cyber Gauntlet**: Fly continuously through the infinite cyber mainframe without arbitrary stop limits. Track your lifetime best and firewalls cleared in real time!
 - **3-Life Data Integrity System**: No unfair instant deaths! The packet has 3 Integrity points. Hitting an obstacle deducts 1 integrity and grants a generous ~1.4-second invulnerability grace flicker.
-- **Magnetic Data Nodes**: Glowing green Data Nodes are magnetically drawn toward your packet when within proximity (90px), ensuring rewarding pickups.
-- **Repair & Breaker Shield**: Collecting 3 Data Nodes restores +1 Integrity and activates a **5.0-second Breaker Shield** to smash directly through firewalls!
+- **Rare Magnetic Data Nodes**: Glowing green Data Nodes now spawn rarely (~18% chance, ~1 in 5 firewalls), rewarding skilled navigation. Proximity magnetism draws them to your packet when within 90px.
+- **High-Value Repair & Breaker Shield**: Each rare node awards +50 points. Harvesting 3 Data Nodes restores +1 Integrity life and charges a **5.0-second Breaker Shield** allowing you to smash straight through firewalls!
 - **Feather-Light Thrust**: Press <kbd>Space</kbd>, <kbd>↑</kbd>, <kbd>W</kbd>, <kbd>J</kbd>, or **Click / Tap** to give the packet an effortless, nimble upward lift against gentle gravity.
 - **Selectable Pacing / Difficulty**: Choose between **Relaxed (0.8x)**, **Standard (1.0x)**, and **Overclock (1.3x)** to match your preferred flow.
 - **Dynamic Phase Escalation (Harder at 10+)**: 
   - **Walls 1–9 (Infiltration)**: Accessible runway with wide 215px gates and static firewalls to build combo and gather momentum.
   - **Wall 10+ (Security Level 2 Lockdown)**: Sudden +30% speed surge, alarm alert, tighter 184px gaps, closer obstacle spacing (340px), and dynamic **Moving Firewalls** that oscillate vertically (marked with glowing amber chevrons and ▲▼ motion arrows)!
-  - **Wall 20+ (Deep Core Overclock)**: High-tension endless overclock (+50% speed, 75% moving firewalls, rapid rhythm).
+  - **Wall 20+ (Deep Core Overclock)**: High-tension endless overclock (+50% speed, 75% moving firewalls, continuous rhythmic escalation).
 
 ---
 
@@ -52,16 +52,16 @@ Take control of a high-frequency **Data Packet** infiltrating the root mainframe
 
 ## ✨ Features
 
-- **Winnable Mainframe Mission**: Defeat 20 firewalls to trigger the Root Mainframe Breached victory modal, complete with triumphant procedural synth chords.
+- **Pure Endless Gauntlet**: Seamless endless flight where your distance and score scale indefinitely with deep-core speed milestones at 10 and 20+ firewalls.
 - **3-Life Data Integrity System**: High tolerance gameplay with 3 HP and visual glitch/flicker grace periods, preventing frustrating one-hit game overs.
-- **Magnetic Node Collection & Repair**: Gentle magnetic attraction draws nearby nodes into your path, granting points, repairs, and breaker shields.
+- **Rare Powerup Nodes & Breaker Shield**: Strategic powerups appearing ~1 in 5 firewalls that reward players with +50 points, +1 HP repair, and high-impact firewall smashing.
 - **Tuned, Balanced Physics**: Accessible learning curve with wider firewall gates (215px+), spacious obstacle spacing (410px+), and forgiving near-miss hitboxes (5.5px).
 - **Full In-Game Pause & Settings Menu (<kbd>ESC</kbd>)**:
   - **Mid-Flight Pacing Control**: Switch between Relaxed (0.8x), Standard (1.0x), and Overclock (1.3x) on the fly during a run.
   - **Audio & Profile Controls**: Toggle procedural Web Audio sound FX and edit Pilot Call Sign anytime.
   - **Quick Run Restarts & Clean Exits**: One-click restart, squad leaderboard check, or return to the main menu.
-- **35/65 Split Grid Menus**: Modern split-card start, victory, pause, and game-over modals displaying live telemetry, controls, and run statistics.
-- **Translucent Frosted Glass HUD**: Sleek floating cards powered by `backdrop-filter: blur(16px)` housing scores, Integrity health pips, mission progress bar, clock speed, and segmented combo meters.
+- **35/65 Split Grid Menus**: Modern split-card start, pause, leaderboard, and game-over modals displaying live telemetry, controls, and run statistics.
+- **Translucent Frosted Glass HUD**: Sleek floating cards powered by `backdrop-filter: blur(16px)` housing scores, Integrity health pips, real-time firewalls cleared counter, clock speed, and segmented combo meters.
 - **Visual FX & Screen Shake**: Luminescent particle trails, shattering firewall voxels, and a 22px screen shake when smashing through obstacles.
 - **Zero Dependencies**: 100% self-contained in a single, lightweight HTML file.
 

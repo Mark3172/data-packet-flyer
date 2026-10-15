@@ -817,13 +817,13 @@
       </div>
     </div>
 
-    <!-- Top-Center Mission Progress (Win Target: 20 Firewalls) -->
+    <!-- Top-Center Firewalls Cleared Counter (Endless Mode) -->
     <div id="hud-mission-card" class="hud-element">
-      <div class="mission-header">
-        <span>MAINFRAME TARGET</span>
-        <span id="mission-count" class="value">0 / 20</span>
+      <div class="mission-header" style="justify-content: center; gap: 8px;">
+        <span>FIREWALLS CLEARED</span>
+        <span id="mission-count" class="value" style="font-size:16px;">0</span>
       </div>
-      <div class="mission-bar-bg">
+      <div class="mission-bar-bg" style="display: none;">
         <div id="mission-bar-fill"></div>
       </div>
     </div>
@@ -832,7 +832,7 @@
     <div id="hud-combo-card" class="hud-element">
       <div class="combo-header">
         <span>DATA OVERLOAD</span>
-        <span id="combo-status" class="combo-status-text">0 / 3 NODES</span>
+        <span id="combo-status" class="combo-status-text">0 / 3 RARE NODES</span>
       </div>
       <div class="combo-pips">
         <div class="combo-pip" id="pip-0"></div>
@@ -874,9 +874,9 @@
           <div>
             <div class="telemetry-header">SYSTEM READY // SECURE</div>
             <div class="directive-box">
-              🎯 <strong>Objective: Clear 20 Firewalls to WIN!</strong><br>
+              🎯 <strong>Objective: Endless Cyber Run — survive as deep as you can!</strong><br>
               🛡️ <strong>Integrity: 3 Lives</strong> (absorbs impacts)<br>
-              ⚡ <strong>3x Nodes:</strong> 5s Smash Shield + Repair<br>
+              ⚡ <strong>Rare Powerup Nodes:</strong> Collect 3 to trigger 5s Smash Shield + Repair<br>
               ⚙️ <strong>Pause & Settings (ESC):</strong> Pause run, adjust pace & audio mid-game
             </div>
           </div>
@@ -887,8 +887,8 @@
               <span>Light Thrust</span>
             </div>
             <div class="guide-item">
-              <span>Mission Goal</span>
-              <span style="color: var(--neon-cyan); font-weight:700;">20 Walls (WIN)</span>
+              <span>Flight Gauntlet</span>
+              <span style="color: var(--neon-cyan); font-weight:700;">Endless Run</span>
             </div>
             <div class="guide-item">
               <span>Integrity Buffer</span>
@@ -911,7 +911,7 @@
             <div class="hero-tagline">Protocol 0x4F // Cyber Flyer</div>
             <h1>DATA // <span>PACKET</span></h1>
             <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 8px;">
-              Infiltrate the secure mainframe by clearing 20 firewalls. Magnetic nodes and a 3-life buffer are enabled for accessible, winnable flight.
+              Pilot deep into the infinite cyber mainframe. Dodge dynamic firewalls, grab rare powerup nodes, and set the ultimate high score.
             </p>
           </div>
 
@@ -921,8 +921,8 @@
               <span id="intro-highscore" class="metric-val cyan">0</span>
             </div>
             <div class="matrix-tile">
-              <span class="metric-name">Mission Target</span>
-              <span class="metric-val" style="color: var(--neon-emerald);">20 FIREWALLS</span>
+              <span class="metric-name">Flight Gauntlet</span>
+              <span class="metric-val" style="color: var(--neon-emerald);">ENDLESS RUN</span>
             </div>
           </div>
 
@@ -1218,7 +1218,7 @@
               </div>
               <div class="guide-item">
                 <span>Firewalls Cleared</span>
-                <span id="pause-stat-walls" style="font-weight:700;">0 / 20</span>
+                <span id="pause-stat-walls" style="font-weight:700;">0</span>
               </div>
               <div class="guide-item">
                 <span>Nodes Harvested</span>
@@ -1778,13 +1778,12 @@
           this.firewallsSmashed = 0;
           this.nodesCollected = 0;
 
-          // Win Condition & Integrity (3 Lives instead of 1-hit death!)
+          // Integrity (3 Lives instead of 1-hit death!) & Endless Mode
           this.maxHp = 3;
           this.hp = 3;
           this.invulnerableTimer = 0;
-          this.WIN_TARGET = 20; // Clear 20 firewalls to WIN!
           this.hasWon = false;
-          this.isEndlessMode = false;
+          this.isEndlessMode = true;
 
           // Transmission Pace Presets (Generous gaps, light agile physics, forgiving spacing)
           this.PACE_CONFIG = {
@@ -2617,11 +2616,7 @@
           } else if (this.state === 'GAMEOVER') {
             this.startNewGame();
           } else if (this.state === 'PAUSED') {
-            if (this.hasWon && !this.isEndlessMode) {
-              this.continueEndless();
-            } else {
-              this.resumeGame();
-            }
+            this.resumeGame();
           }
         }
 
@@ -2647,7 +2642,7 @@
           this.hp = this.maxHp;
           this.invulnerableTimer = 0;
           this.hasWon = false;
-          this.isEndlessMode = false;
+          this.isEndlessMode = true;
 
           // Apply selected pace configuration
           this.baseSpeed = cfg.speed;
@@ -2704,7 +2699,7 @@
           this.shieldTimer = 0;
           this.invulnerableTimer = 0;
           this.hasWon = false;
-          this.isEndlessMode = false;
+          this.isEndlessMode = true;
           this.screenShake = 0;
           this.obstacles = [];
           this.dataNodes = [];
@@ -2785,7 +2780,7 @@
           // Update pause telemetry stats
           if (this.dom.pauseStatScore) this.dom.pauseStatScore.textContent = this.score;
           if (this.dom.pauseStatHp) this.dom.pauseStatHp.textContent = `${this.hp} / ${this.maxHp}`;
-          if (this.dom.pauseStatWalls) this.dom.pauseStatWalls.textContent = `${this.firewallsPassed} / ${this.WIN_TARGET}`;
+          if (this.dom.pauseStatWalls) this.dom.pauseStatWalls.textContent = `${this.firewallsPassed}`;
           if (this.dom.pauseStatNodes) this.dom.pauseStatNodes.textContent = this.nodesCollected;
 
           // Sync pace selector buttons in pause modal
@@ -2820,11 +2815,7 @@
           if (this.state === 'PLAYING') {
             this.pauseGame();
           } else if (this.state === 'PAUSED') {
-            if (this.hasWon && !this.isEndlessMode) {
-              this.continueEndless();
-            } else {
-              this.resumeGame();
-            }
+            this.resumeGame();
           }
         }
 
@@ -2886,8 +2877,8 @@
 
           this.obstacles.push(obstacle);
 
-          // Spawn a Data Node in a comfortable, reachable line (80% chance)
-          if (Math.random() > 0.20) {
+          // Spawn a Data Node rarely (~18% chance, roughly 1 in ~5 to 6 firewalls)
+          if (Math.random() < 0.18) {
             const inGap = Math.random() > 0.35;
             const nodeX = inGap ? x + colWidth / 2 : x + colWidth + (this.obstacleSpacing - colWidth) / 2;
             const nodeY = inGap ? gapY + gap / 2 : Math.max(90, Math.min(this.V_HEIGHT - 90, gapY + gap / 2 + (Math.random() - 0.5) * 50));
@@ -2997,11 +2988,6 @@
               this.firewallsPassed++;
               this.checkSpeedProgression();
               this.updateHUD();
-
-              // Win Condition Check: Infiltrate Mainframe (20 Firewalls)
-              if (this.firewallsPassed >= this.WIN_TARGET && !this.hasWon && !this.isEndlessMode) {
-                this.triggerVictory();
-              }
             }
 
             // Firewall Collision Check
@@ -3090,10 +3076,10 @@
 
         collectDataNode(node) {
           this.nodesCollected++;
-          this.score += 25;
+          this.score += 50;
           this.sound.playCollect(780 + this.combo * 140);
           this.particles.emitCollect(node.x, node.y);
-          this.floatingTexts.add('+25 NODE', node.x, node.y - 10, '#00ffaa');
+          this.floatingTexts.add('+50 RARE NODE!', node.x, node.y - 10, '#00ffaa');
 
           if (!this.shieldActive) {
             this.combo++;
@@ -3264,13 +3250,12 @@
             }
           }
 
-          // Update Mission Progress Bar
-          const winPct = Math.min(100, Math.floor((this.firewallsPassed / this.WIN_TARGET) * 100));
-          if (this.dom.missionBarFill) {
-            this.dom.missionBarFill.style.width = `${winPct}%`;
-          }
+          // Update Firewalls Cleared Counter
           if (this.dom.missionCount) {
-            this.dom.missionCount.textContent = this.hasWon ? 'CLEARED 🏆' : `${this.firewallsPassed} / ${this.WIN_TARGET}`;
+            this.dom.missionCount.textContent = this.firewallsPassed;
+          }
+          if (this.dom.missionBarFill) {
+            this.dom.missionBarFill.style.width = '0%';
           }
 
           // Update Combo Pips
@@ -3291,7 +3276,7 @@
             this.dom.comboStatus.textContent = 'SHIELD CHARGED';
             this.dom.comboStatus.className = 'combo-status-text shield-active';
           } else {
-            this.dom.comboStatus.textContent = `${this.combo} / ${this.MAX_COMBO} NODES`;
+            this.dom.comboStatus.textContent = `${this.combo} / ${this.MAX_COMBO} RARE NODES`;
             this.dom.comboStatus.className = 'combo-status-text';
           }
         }
