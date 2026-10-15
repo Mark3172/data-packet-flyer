@@ -1980,9 +1980,9 @@
                 e.target.closest('#hud-score-card') || 
                 e.target.closest('#hud-combo-card') || 
                 e.target.closest('#hud-mission-card') || 
-                e.target.closest('#leaderboard-modal') || 
-                e.target.tagName === 'INPUT' || 
-                e.target.tagName === 'BUTTON') {
+                e.target.closest('.modal-overlay') || 
+                e.target.closest('button') || 
+                e.target.closest('input')) {
               return;
             }
             this.handlePrimaryAction();
@@ -2553,13 +2553,13 @@
             this.lastObstacleX += this.obstacleSpacing;
           }
 
-          // Update HUD
+          // Update HUD & Dismiss all overlays
           this.updateHUD();
-          this.dom.startModal.classList.remove('active');
-          this.dom.gameoverModal.classList.remove('active');
-          this.dom.victoryModal.classList.remove('active');
+          if (this.dom.startModal) this.dom.startModal.classList.remove('active');
+          if (this.dom.gameoverModal) this.dom.gameoverModal.classList.remove('active');
+          if (this.dom.victoryModal) this.dom.victoryModal.classList.remove('active');
           if (this.dom.leaderboardModal) this.dom.leaderboardModal.classList.remove('active');
-          this.dom.pauseBanner.classList.remove('active');
+          if (this.dom.pauseBanner) this.dom.pauseBanner.classList.remove('active');
         }
 
         toggleAudio() {
@@ -2659,13 +2659,14 @@
 
           const minY = 65;
           const maxY = this.V_HEIGHT - gap - 65;
-          const baseGapY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+          const gapY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+          const baseGapY = gapY;
           const colWidth = 62;
 
           const obstacle = {
             x: x,
             width: colWidth,
-            gapY: baseGapY,
+            gapY: gapY,
             baseGapY: baseGapY,
             gapHeight: gap,
             passed: false,
