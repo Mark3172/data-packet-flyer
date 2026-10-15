@@ -754,181 +754,11 @@
       color: var(--text-muted);
     }
 
-    /* Pause Overlay */
-    #pause-banner {
-      position: absolute;
-      inset: 0;
-      background: rgba(9, 10, 14, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 60;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s;
-    }
-
-    #pause-banner.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    #pause-banner h2 {
-      font-size: 28px;
-      letter-spacing: 3px;
-      color: var(--neon-cyan);
-      margin-bottom: 12px;
-      text-shadow: 0 0 15px var(--neon-cyan-dim);
-    }
-
-    #pause-banner p {
-      color: var(--text-muted);
-      font-size: 12px;
-      letter-spacing: 1px;
-    }
-
     /* ==========================================================================
-       OFFICE-STEALTH BOSS SCREEN (100% Benign System Update)
+       IN-GAME PAUSE & SETTINGS MODAL
        ========================================================================== */
-    #boss-screen {
-      position: fixed;
-      inset: 0;
-      background-color: #000000;
-      z-index: 999999;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-      color: #ffffff;
-      user-select: none;
-      cursor: default;
-    }
-
-    #boss-screen.active {
-      display: flex;
-    }
-
-    /* Authentic Windows Update Dots Spinner */
-    .windows-spinner {
-      position: relative;
-      width: 60px;
-      height: 60px;
-      margin-bottom: 36px;
-    }
-
-    .windows-spinner .circle {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transform: rotate(225deg);
-      animation: orbit 5.5s infinite;
-    }
-
-    .windows-spinner .circle::after {
-      content: '';
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 0 0 9px rgba(255, 255, 255, 0.8);
-    }
-
-    .windows-spinner .circle:nth-child(2) { animation-delay: 240ms; }
-    .windows-spinner .circle:nth-child(3) { animation-delay: 480ms; }
-    .windows-spinner .circle:nth-child(4) { animation-delay: 720ms; }
-    .windows-spinner .circle:nth-child(5) { animation-delay: 960ms; }
-
-    @keyframes orbit {
-      0% {
-        transform: rotate(225deg);
-        opacity: 1;
-        animation-timing-function: ease-out;
-      }
-      7% {
-        transform: rotate(345deg);
-        animation-timing-function: linear;
-      }
-      30% {
-        transform: rotate(455deg);
-        animation-timing-function: ease-in-out;
-      }
-      39% {
-        transform: rotate(690deg);
-        animation-timing-function: linear;
-      }
-      70% {
-        transform: rotate(815deg);
-        opacity: 1;
-        animation-timing-function: ease-out;
-      }
-      75% {
-        transform: rotate(945deg);
-        animation-timing-function: ease-out;
-      }
-      76% {
-        transform: rotate(945deg);
-        opacity: 0;
-      }
-      100% {
-        transform: rotate(945deg);
-        opacity: 0;
-      }
-    }
-
-    .boss-primary-text {
-      font-size: 23px;
-      font-weight: 300;
-      letter-spacing: -0.2px;
-      margin-bottom: 14px;
-    }
-
-    .boss-secondary-text {
-      font-size: 14px;
-      color: #cccccc;
-      font-weight: 300;
-      margin-bottom: 6px;
-    }
-
-    .boss-tertiary-text {
-      font-size: 13px;
-      color: #999999;
-      font-weight: 300;
-    }
-
-    /* Discreet, accessible stealth hint / exit button at bottom edge */
-    .boss-stealth-hint {
-      position: absolute;
-      bottom: 24px;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.7);
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      padding: 9px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.2s ease;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      letter-spacing: 0.3px;
-      z-index: 1000000;
-    }
-
-    .boss-stealth-hint:hover {
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.18);
-      border-color: rgba(255, 255, 255, 0.45);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
-    }
-
-    .boss-stealth-hint:active {
-      transform: translateY(1px);
+    #pause-modal {
+      z-index: 60;
     }
 
     /* Responsive fallbacks */
@@ -1024,9 +854,9 @@
         </div>
       </div>
       <div style="display: flex; gap: 8px;">
-        <div class="hud-pill" id="btn-boss-info" title="Office Stealth: Camouflage game into a fake Windows Update screen (Press ESC or click button to exit)">
+        <div class="hud-pill" id="btn-pause-toggle" title="Pause Game & Open Settings (ESC)">
           <span class="key-badge">ESC</span>
-          <span>Boss Key (Camouflage)</span>
+          <span>Pause / Settings</span>
         </div>
         <div class="hud-pill" id="btn-audio-toggle">
           <span class="audio-indicator" id="audio-dot"></span>
@@ -1047,7 +877,7 @@
               🎯 <strong>Objective: Clear 20 Firewalls to WIN!</strong><br>
               🛡️ <strong>Integrity: 3 Lives</strong> (absorbs impacts)<br>
               ⚡ <strong>3x Nodes:</strong> 5s Smash Shield + Repair<br>
-              💼 <strong>Boss Key (ESC):</strong> Fake Windows Update camouflage
+              ⚙️ <strong>Pause & Settings (ESC):</strong> Pause run, adjust pace & audio mid-game
             </div>
           </div>
 
@@ -1066,7 +896,7 @@
             </div>
             <div class="guide-item">
               <span>Escape (ESC)</span>
-              <span>Boss Key (Camouflage)</span>
+              <span>Pause / Settings</span>
             </div>
             <div class="guide-item">
               <span>Q (When Dead)</span>
@@ -1148,7 +978,7 @@
             </div>
             <div class="guide-item">
               <span>Escape (ESC)</span>
-              <span>Boss Key (Camouflage)</span>
+              <span>Pause / Settings</span>
             </div>
             <div class="guide-item">
               <span>M</span>
@@ -1235,7 +1065,7 @@
             </div>
             <div class="guide-item">
               <span>Escape (ESC)</span>
-              <span>Boss Key (Camouflage)</span>
+              <span>Pause / Settings</span>
             </div>
           </div>
         </div>
@@ -1364,14 +1194,116 @@
       </div>
     </div>
 
-    <!-- PAUSE BANNER -->
-    <div id="pause-banner">
-      <h2>TRANSMISSION SUSPENDED</h2>
-      <p>PRESS <span class="key-badge">SPACE</span> OR CLICK CANVAS TO RESUME</p>
-      <div style="margin-top: 16px;">
-        <button id="btn-pause-menu" class="pace-btn" style="padding: 8px 18px; font-size: 11px; cursor: pointer; color: var(--text-main); border-color: rgba(255,255,255,0.25);">
-          🏠 RETURN TO MAIN MENU
-        </button>
+    <!-- IN-GAME PAUSE & SETTINGS MODAL -->
+    <div id="pause-modal" class="modal-overlay">
+      <div class="split-grid-modal" style="max-width: 780px;">
+        <!-- Left 35% Column: Telemetry & Controls -->
+        <div class="modal-left">
+          <div>
+            <div class="telemetry-header">TRANSMISSION SUSPENDED</div>
+            <div class="directive-box">
+              ⏸️ <strong>Flight Paused.</strong><br>
+              Adjust your flight settings or resume transmission whenever you are ready.
+            </div>
+
+            <!-- In-Flight Stats Buffer -->
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 14px;">
+              <div class="guide-item">
+                <span>Score Buffer</span>
+                <span id="pause-stat-score" style="color: var(--neon-cyan); font-weight:700;">0</span>
+              </div>
+              <div class="guide-item">
+                <span>Integrity Left</span>
+                <span id="pause-stat-hp" style="color: var(--neon-emerald); font-weight:700;">3 / 3</span>
+              </div>
+              <div class="guide-item">
+                <span>Firewalls Cleared</span>
+                <span id="pause-stat-walls" style="font-weight:700;">0 / 20</span>
+              </div>
+              <div class="guide-item">
+                <span>Nodes Harvested</span>
+                <span id="pause-stat-nodes" style="color: var(--neon-emerald); font-weight:700;">0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="controls-guide">
+            <div class="guide-item">
+              <span>Space / ESC</span>
+              <span>Resume Flight</span>
+            </div>
+            <div class="guide-item">
+              <span>M</span>
+              <span>Mute / Unmute</span>
+            </div>
+            <div class="guide-item">
+              <span>L</span>
+              <span>Leaderboard</span>
+            </div>
+            <div class="guide-item">
+              <span>Q</span>
+              <span>Main Menu</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 65% Column: Settings & Actions -->
+        <div class="modal-right">
+          <div class="hero-title-group">
+            <div class="hero-tagline">Flight Operations // Operations Console</div>
+            <h1 style="font-size: 28px;">SYSTEM // <span>PAUSED</span></h1>
+          </div>
+
+          <!-- Transmission Pace / Difficulty Setting -->
+          <div class="pace-group" style="margin: 12px 0 10px 0;">
+            <span class="pace-title">Transmission Pace / Difficulty (Change Mid-Run)</span>
+            <div class="pace-selector">
+              <button type="button" class="pace-btn" data-pause-pace="relaxed">RELAXED (0.8x)</button>
+              <button type="button" class="pace-btn active" data-pause-pace="standard">STANDARD (1.0x)</button>
+              <button type="button" class="pace-btn" data-pause-pace="overclock">OVERCLOCK (1.3x)</button>
+            </div>
+          </div>
+
+          <!-- Audio & Pilot Settings Grid -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0 14px 0;">
+            <!-- Audio Toggle Card -->
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <span class="pace-title" style="font-size: 9px; margin-bottom: 6px;">SYNTH AUDIO FX</span>
+              <button type="button" id="btn-pause-audio" class="pace-btn active" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px; cursor: pointer;">
+                <span class="audio-indicator" id="pause-audio-dot"></span>
+                <span id="pause-audio-label">Audio: Muted</span>
+              </button>
+            </div>
+
+            <!-- Pilot Call Sign Card -->
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <span class="pace-title" style="font-size: 9px; margin-bottom: 6px;">PILOT CALL SIGN</span>
+              <input type="text" id="pause-callsign-input" class="cyber-input" style="padding: 7px 10px; font-size: 11px;" maxlength="14" placeholder="PILOT_01">
+            </div>
+          </div>
+
+          <!-- Primary Action: Resume -->
+          <button id="btn-resume-game" class="btn-launch" style="width: 100%; margin-bottom: 10px;">
+            <span class="key-badge" style="background: rgba(0,0,0,0.3); color:#fff;">SPACE / ESC</span>
+            <span>▶ RESUME TRANSMISSION</span>
+          </button>
+
+          <!-- Secondary Actions: Restart Run, Leaderboard, Main Menu, Leave -->
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button id="btn-pause-restart" class="btn-launch btn-secondary" style="flex: 1.1; min-width: 120px; padding: 12px 10px; font-size: 11px;" title="Restart current run from beginning">
+              <span>🔄 RESTART RUN</span>
+            </button>
+            <button id="btn-pause-leaderboard" class="btn-launch btn-secondary" style="flex: 1.1; min-width: 120px; padding: 12px 10px; font-size: 11px;" title="View Squad Leaderboard">
+              <span>🏆 SQUAD BOARD</span>
+            </button>
+            <button id="btn-pause-menu" class="btn-launch btn-secondary" style="flex: 1.1; min-width: 120px; padding: 12px 10px; font-size: 11px;" title="Return to Title / Start Screen">
+              <span>🏠 MAIN MENU</span>
+            </button>
+            <button id="btn-pause-quit" class="btn-launch btn-secondary" style="flex: 0.9; min-width: 90px; padding: 12px 10px; font-size: 11px; color: var(--neon-red) !important; border-color: rgba(255, 51, 102, 0.4) !important;" title="Leave Game Session">
+              <span>🚪 QUIT</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1403,26 +1335,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================
-       OFFICE-STEALTH BOSS SCREEN
-       Authentic Windows 10/11 "Working on updates" full-screen overlay
-       ======================================================================== -->
-  <div id="boss-screen">
-    <div class="windows-spinner">
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="circle"></div>
-    </div>
-    <div class="boss-primary-text">Working on updates <span id="boss-pct">27</span>% complete.</div>
-    <div class="boss-secondary-text">Don't turn off your PC. This will take a while.</div>
-    <div class="boss-tertiary-text">Your device will restart several times.</div>
-    <div class="boss-stealth-hint" id="boss-exit-btn" title="Exit Boss Camouflage & Return to Game">
-      ↩ Click or Press <kbd style="background:rgba(255,255,255,0.22); padding:2px 7px; border-radius:4px; font-family:inherit; font-weight:700;">ESC</kbd> to Return to Game
     </div>
   </div>
 
@@ -1860,7 +1772,6 @@
 
           // Game State
           this.state = 'START'; // 'START', 'PLAYING', 'GAMEOVER', 'PAUSED'
-          this.isBossActive = false;
           this.score = 0;
           this.highScore = parseInt(localStorage.getItem('packet_runner_hiscore') || '0', 10);
           this.firewallsPassed = 0;
@@ -1949,10 +1860,22 @@
             btnAudioToggle: document.getElementById('btn-audio-toggle'),
             audioDot: document.getElementById('audio-dot'),
             audioLabel: document.getElementById('audio-label'),
-            btnBossInfo: document.getElementById('btn-boss-info'),
-            bossScreen: document.getElementById('boss-screen'),
-            bossExitBtn: document.getElementById('boss-exit-btn'),
-            bossPct: document.getElementById('boss-pct'),
+            btnPauseToggle: document.getElementById('btn-pause-toggle'),
+            pauseModal: document.getElementById('pause-modal'),
+            btnResumeGame: document.getElementById('btn-resume-game'),
+            btnPauseRestart: document.getElementById('btn-pause-restart'),
+            btnPauseLeaderboard: document.getElementById('btn-pause-leaderboard'),
+            btnPauseMenu: document.getElementById('btn-pause-menu'),
+            btnPauseQuit: document.getElementById('btn-pause-quit'),
+            btnPauseAudio: document.getElementById('btn-pause-audio'),
+            pauseAudioDot: document.getElementById('pause-audio-dot'),
+            pauseAudioLabel: document.getElementById('pause-audio-label'),
+            pausePaceButtons: document.querySelectorAll('[data-pause-pace]'),
+            pauseCallsignInput: document.getElementById('pause-callsign-input'),
+            pauseStatScore: document.getElementById('pause-stat-score'),
+            pauseStatHp: document.getElementById('pause-stat-hp'),
+            pauseStatWalls: document.getElementById('pause-stat-walls'),
+            pauseStatNodes: document.getElementById('pause-stat-nodes'),
             startModal: document.getElementById('start-modal'),
             gameoverModal: document.getElementById('gameover-modal'),
             victoryModal: document.getElementById('victory-modal'),
@@ -1962,7 +1885,6 @@
             victoryHp: document.getElementById('victory-hp'),
             victoryNodes: document.getElementById('victory-nodes'),
             victorySmashed: document.getElementById('victory-smashed'),
-            pauseBanner: document.getElementById('pause-banner'),
             btnStart: document.getElementById('btn-start'),
             btnRestart: document.getElementById('btn-restart'),
             introHighScore: document.getElementById('intro-highscore'),
@@ -2054,7 +1976,14 @@
               this.handlePrimaryAction();
             } else if (e.code === 'Escape') {
               e.preventDefault();
-              this.toggleBossKey();
+              if (this.dom.leaderboardModal && this.dom.leaderboardModal.classList.contains('active')) {
+                this.closeLeaderboard();
+              } else if (this.dom.exitModal && this.dom.exitModal.classList.contains('active')) {
+                this.dom.exitModal.classList.remove('active');
+                this.returnToMenu();
+              } else {
+                this.togglePause();
+              }
             } else if (e.key === 'q' || e.key === 'Q') {
               if (this.state === 'GAMEOVER' || this.state === 'PAUSED') {
                 e.preventDefault();
@@ -2144,41 +2073,66 @@
             });
           }
 
-          // Pause Banner Button
+          // Pause & Settings Modal Controls
+          if (this.dom.btnPauseToggle) {
+            this.dom.btnPauseToggle.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.togglePause();
+            });
+          }
+          if (this.dom.btnResumeGame) {
+            this.dom.btnResumeGame.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.resumeGame();
+            });
+          }
+          if (this.dom.btnPauseRestart) {
+            this.dom.btnPauseRestart.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.startNewGame();
+            });
+          }
+          if (this.dom.btnPauseLeaderboard) {
+            this.dom.btnPauseLeaderboard.addEventListener('click', (e) => {
+              e.stopPropagation();
+              this.openLeaderboard('squad');
+            });
+          }
           if (this.dom.btnPauseMenu) {
             this.dom.btnPauseMenu.addEventListener('click', (e) => {
               e.stopPropagation();
               this.returnToMenu();
             });
           }
-
-          // Exit Modal Buttons
-          if (this.dom.btnExitReturn) {
-            this.dom.btnExitReturn.addEventListener('click', (e) => {
+          if (this.dom.btnPauseQuit) {
+            this.dom.btnPauseQuit.addEventListener('click', (e) => {
               e.stopPropagation();
-              if (this.dom.exitModal) this.dom.exitModal.classList.remove('active');
-              this.returnToMenu();
+              this.quitGame();
             });
           }
-          if (this.dom.btnExitClose) {
-            this.dom.btnExitClose.addEventListener('click', (e) => {
+          if (this.dom.btnPauseAudio) {
+            this.dom.btnPauseAudio.addEventListener('click', (e) => {
               e.stopPropagation();
-              window.close();
-              this.showToast('Please close this tab (Ctrl+W / ⌘+W)');
+              this.toggleAudio();
             });
           }
-
-          // Audio Button Click
-          this.dom.btnAudioToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.toggleAudio();
-          });
-
-          // Boss Key Pill Click
-          this.dom.btnBossInfo.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.toggleBossKey();
-          });
+          if (this.dom.pausePaceButtons) {
+            this.dom.pausePaceButtons.forEach((btn) => {
+              btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const pace = btn.dataset.pausePace;
+                if (this.PACE_CONFIG[pace]) {
+                  this.setPace(pace);
+                  this.showToast(`PACE SET TO ${this.PACE_CONFIG[pace].label}`);
+                }
+              });
+            });
+          }
+          if (this.dom.pauseCallsignInput) {
+            this.dom.pauseCallsignInput.addEventListener('input', (e) => {
+              this.updatePilotName(e.target.value);
+            });
+          }
 
           // Leaderboard Navigation Buttons
           if (this.dom.btnHudLeaderboard) {
@@ -2263,21 +2217,21 @@
             });
           }
 
-          // Return to game when clicking/tapping the exit button on the Boss Screen
-          if (this.dom.bossExitBtn) {
-            ['click', 'touchstart'].forEach((evt) => {
-              this.dom.bossExitBtn.addEventListener(evt, (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                this.toggleBossKey();
-              }, { passive: false });
+          // Exit Modal Buttons
+          if (this.dom.btnExitReturn) {
+            this.dom.btnExitReturn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              if (this.dom.exitModal) this.dom.exitModal.classList.remove('active');
+              this.returnToMenu();
             });
           }
-
-          // Clicking elsewhere on fake update screen does not reveal the game (stays stealthy)
-          this.dom.bossScreen.addEventListener('click', (e) => {
-            e.stopPropagation();
-          });
+          if (this.dom.btnExitClose) {
+            this.dom.btnExitClose.addEventListener('click', (e) => {
+              e.stopPropagation();
+              window.close();
+              this.showToast('Please close this tab (Ctrl+W / ⌘+W)');
+            });
+          }
         }
 
         /* ----------------------------------------------------------------------
@@ -2422,6 +2376,9 @@
           }
           if (this.dom.lbInputCallsign && this.dom.lbInputCallsign.value !== this.pilotName) {
             this.dom.lbInputCallsign.value = this.pilotName;
+          }
+          if (this.dom.pauseCallsignInput && this.dom.pauseCallsignInput.value !== this.pilotName) {
+            this.dom.pauseCallsignInput.value = this.pilotName;
           }
           this.updateLeaderboardDisplay();
         }
@@ -2625,8 +2582,24 @@
               b.classList.toggle('active', b.dataset.pace === pace);
             });
           }
+          if (this.dom && this.dom.pausePaceButtons) {
+            this.dom.pausePaceButtons.forEach((b) => {
+              b.classList.toggle('active', b.dataset.pausePace === pace);
+            });
+          }
 
           const cfg = this.PACE_CONFIG[pace];
+          this.baseSpeed = cfg.speed;
+          this.currentSpeed = this.baseSpeed;
+          this.speedMultiplier = cfg.label;
+          this.obstacleSpacing = cfg.spacing;
+          this.baseGapHeight = cfg.gap;
+          if (this.player) {
+            this.player.gravity = cfg.gravity;
+            this.player.jumpImpulse = cfg.jump;
+            this.player.maxFallSpeed = cfg.maxFall;
+          }
+
           if (this.dom && this.dom.hudSpeed) {
             this.dom.hudSpeed.textContent = cfg.label;
           }
@@ -2637,8 +2610,6 @@
         }
 
         handlePrimaryAction() {
-          if (this.isBossActive) return;
-
           if (this.state === 'START') {
             this.startNewGame();
           } else if (this.state === 'PLAYING') {
@@ -2714,7 +2685,7 @@
           if (this.dom.gameoverModal) this.dom.gameoverModal.classList.remove('active');
           if (this.dom.victoryModal) this.dom.victoryModal.classList.remove('active');
           if (this.dom.leaderboardModal) this.dom.leaderboardModal.classList.remove('active');
-          if (this.dom.pauseBanner) this.dom.pauseBanner.classList.remove('active');
+          if (this.dom.pauseModal) this.dom.pauseModal.classList.remove('active');
           if (this.dom.exitModal) this.dom.exitModal.classList.remove('active');
         }
 
@@ -2766,7 +2737,7 @@
           if (this.dom.gameoverModal) this.dom.gameoverModal.classList.remove('active');
           if (this.dom.victoryModal) this.dom.victoryModal.classList.remove('active');
           if (this.dom.leaderboardModal) this.dom.leaderboardModal.classList.remove('active');
-          if (this.dom.pauseBanner) this.dom.pauseBanner.classList.remove('active');
+          if (this.dom.pauseModal) this.dom.pauseModal.classList.remove('active');
           if (this.dom.exitModal) this.dom.exitModal.classList.remove('active');
           if (this.dom.startModal) this.dom.startModal.classList.add('active');
 
@@ -2789,7 +2760,7 @@
           if (this.dom.victoryModal) this.dom.victoryModal.classList.remove('active');
           if (this.dom.leaderboardModal) this.dom.leaderboardModal.classList.remove('active');
           if (this.dom.startModal) this.dom.startModal.classList.remove('active');
-          if (this.dom.pauseBanner) this.dom.pauseBanner.classList.remove('active');
+          if (this.dom.pauseModal) this.dom.pauseModal.classList.remove('active');
           if (this.dom.exitModal) this.dom.exitModal.classList.add('active');
           this.state = 'START';
           this.showToast('TRANSMISSION DISCONNECTED');
@@ -2797,69 +2768,71 @@
 
         toggleAudio() {
           const isMuted = this.sound.toggleMute();
-          if (isMuted) {
-            this.dom.audioDot.classList.remove('active');
-            this.dom.audioLabel.textContent = 'Audio: Muted';
-          } else {
-            this.dom.audioDot.classList.add('active');
-            this.dom.audioLabel.textContent = 'Audio: Live';
-          }
+          const label = isMuted ? 'Audio: Muted' : 'Audio: Live';
+          if (this.dom.audioDot) this.dom.audioDot.classList.toggle('active', !isMuted);
+          if (this.dom.audioLabel) this.dom.audioLabel.textContent = label;
+          if (this.dom.pauseAudioDot) this.dom.pauseAudioDot.classList.toggle('active', !isMuted);
+          if (this.dom.pauseAudioLabel) this.dom.pauseAudioLabel.textContent = label;
         }
 
         /* ----------------------------------------------------------------------
-           OFFICE STEALTH BOSS KEY LOGIC
+           IN-GAME PAUSE & SETTINGS LOGIC
            ---------------------------------------------------------------------- */
-        toggleBossKey() {
-          this.isBossActive = !this.isBossActive;
+        pauseGame() {
+          if (this.state !== 'PLAYING') return;
+          this.state = 'PAUSED';
 
-          if (this.isBossActive) {
-            // Instantly pause game and reveal benign Windows update screen
-            if (this.state === 'PLAYING') {
-              this.state = 'PAUSED';
-            }
-            this.dom.bossScreen.classList.add('active');
-            this.dom.container.style.visibility = 'hidden';
+          // Update pause telemetry stats
+          if (this.dom.pauseStatScore) this.dom.pauseStatScore.textContent = this.score;
+          if (this.dom.pauseStatHp) this.dom.pauseStatHp.textContent = `${this.hp} / ${this.maxHp}`;
+          if (this.dom.pauseStatWalls) this.dom.pauseStatWalls.textContent = `${this.firewallsPassed} / ${this.WIN_TARGET}`;
+          if (this.dom.pauseStatNodes) this.dom.pauseStatNodes.textContent = this.nodesCollected;
 
-            // Slow percentage ticker for authenticity
-            this.startFakeUpdateTicker();
-          } else {
-            // Restore game screen
-            this.dom.bossScreen.classList.remove('active');
-            this.dom.container.style.visibility = 'visible';
-            this.stopFakeUpdateTicker();
-
-            // Return cleanly into paused state so user doesn't instantly die
-            if (this.state === 'PAUSED') {
-              this.dom.pauseBanner.classList.add('active');
-            }
+          // Sync pace selector buttons in pause modal
+          if (this.dom.pausePaceButtons) {
+            this.dom.pausePaceButtons.forEach((b) => {
+              b.classList.toggle('active', b.dataset.pausePace === this.currentPace);
+            });
           }
+
+          // Sync audio button state in pause modal
+          this.syncPauseAudioState();
+
+          // Sync call sign
+          if (this.dom.pauseCallsignInput) {
+            this.dom.pauseCallsignInput.value = this.pilotName;
+          }
+
+          if (this.dom.pauseModal) this.dom.pauseModal.classList.add('active');
         }
 
         resumeGame() {
           if (this.state === 'PAUSED') {
             this.state = 'PLAYING';
-            this.dom.pauseBanner.classList.remove('active');
+            if (this.dom.pauseModal) this.dom.pauseModal.classList.remove('active');
+            if (this.dom.victoryModal) this.dom.victoryModal.classList.remove('active');
             this.thrustPlayer();
+            this.showToast('TRANSMISSION RESUMED');
           }
         }
 
-        startFakeUpdateTicker() {
-          this.stopFakeUpdateTicker();
-          let pct = 27 + Math.floor(Math.random() * 5);
-          this.dom.bossPct.textContent = pct;
-          this.bossTickerInterval = setInterval(() => {
-            if (pct < 99 && Math.random() > 0.4) {
-              pct++;
-              this.dom.bossPct.textContent = pct;
+        togglePause() {
+          if (this.state === 'PLAYING') {
+            this.pauseGame();
+          } else if (this.state === 'PAUSED') {
+            if (this.hasWon && !this.isEndlessMode) {
+              this.continueEndless();
+            } else {
+              this.resumeGame();
             }
-          }, 3500);
+          }
         }
 
-        stopFakeUpdateTicker() {
-          if (this.bossTickerInterval) {
-            clearInterval(this.bossTickerInterval);
-            this.bossTickerInterval = null;
-          }
+        syncPauseAudioState() {
+          const isMuted = this.sound ? this.sound.muted : true;
+          const label = isMuted ? 'Audio: Muted' : 'Audio: Live';
+          if (this.dom.pauseAudioDot) this.dom.pauseAudioDot.classList.toggle('active', !isMuted);
+          if (this.dom.pauseAudioLabel) this.dom.pauseAudioLabel.textContent = label;
         }
 
         /* ----------------------------------------------------------------------

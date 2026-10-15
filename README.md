@@ -33,8 +33,8 @@ Take control of a high-frequency **Data Packet** infiltrating the root mainframe
 ## 🕹️ Controls & Mechanics
 
 | <kbd>Space</kbd> / <kbd>↑</kbd> / <kbd>W</kbd> / **Left Click** | **Vertical Thrust** | Feather-light upward impulse with responsive, smooth tilting. |
+| <kbd>ESC</kbd> | **Pause & Settings Menu** | Pause the game mid-run to change difficulty pace (0.8x / 1.0x / 1.3x), toggle audio, edit call sign, restart, or return to the main menu. |
 | <kbd>L</kbd> | **Squad Leaderboard** | Open the 35/65 Hall of Fame modal to view rankings, name your squad, and invite friends. |
-| <kbd>ESC</kbd> | **Boss Stealth Key** | Instantly hides the game behind an authentic corporate **Windows System Update** screen. Press <kbd>ESC</kbd> or click the sleek **[ ↩ Return to Game ]** button to exit safely. |
 | <kbd>Q</kbd> | **Leave Run / Main Menu** | Return to the Title screen when dead or paused, or click **Leave Game** to exit session. |
 | <kbd>M</kbd> | **Audio Toggle** | Toggle procedural Web Audio sound FX (muted by default for office safety). |
 
@@ -56,13 +56,13 @@ Take control of a high-frequency **Data Packet** infiltrating the root mainframe
 - **3-Life Data Integrity System**: High tolerance gameplay with 3 HP and visual glitch/flicker grace periods, preventing frustrating one-hit game overs.
 - **Magnetic Node Collection & Repair**: Gentle magnetic attraction draws nearby nodes into your path, granting points, repairs, and breaker shields.
 - **Tuned, Balanced Physics**: Accessible learning curve with wider firewall gates (215px+), spacious obstacle spacing (410px+), and forgiving near-miss hitboxes (5.5px).
-- **Interactive Pace Selector**: Seamlessly switch between Relaxed (0.8x), Standard (1.0x), and Overclock (1.3x) right on the start menu.
-- **35/65 Split Grid Menus**: Modern split-card start, victory, and game-over modals displaying live telemetry, controls, and run statistics.
+- **Full In-Game Pause & Settings Menu (<kbd>ESC</kbd>)**:
+  - **Mid-Flight Pacing Control**: Switch between Relaxed (0.8x), Standard (1.0x), and Overclock (1.3x) on the fly during a run.
+  - **Audio & Profile Controls**: Toggle procedural Web Audio sound FX and edit Pilot Call Sign anytime.
+  - **Quick Run Restarts & Clean Exits**: One-click restart, squad leaderboard check, or return to the main menu.
+- **35/65 Split Grid Menus**: Modern split-card start, victory, pause, and game-over modals displaying live telemetry, controls, and run statistics.
 - **Translucent Frosted Glass HUD**: Sleek floating cards powered by `backdrop-filter: blur(16px)` housing scores, Integrity health pips, mission progress bar, clock speed, and segmented combo meters.
 - **Visual FX & Screen Shake**: Luminescent particle trails, shattering firewall voxels, and a 22px screen shake when smashing through obstacles.
-- **Office Stealth Mode**:
-  - **Mute by default**: Procedural synth audio powered by Web Audio API without external audio files.
-  - **Authentic Windows Update Boss Screen**: Realistic Segoe UI circular dot spinner and incrementing update percentage ticker that camouflages your gameplay, with an accessible **[ ↩ Return to Game ]** button or <kbd>ESC</kbd> shortcut.
 - **Zero Dependencies**: 100% self-contained in a single, lightweight HTML file.
 
 ---
